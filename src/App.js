@@ -8,7 +8,7 @@ function App() {
     <div className=''>
       <Navbar/>
       <Routes>
-      <Route exact path="/" element={HomePage} />
+      <Route exact path="/" element={<HomePage/>} />
       <Route path="/login" element={<Login/>} />
       <Route path="/" element={<Navigate replace to="/"/>}/>
     </Routes>
