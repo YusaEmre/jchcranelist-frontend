@@ -1,9 +1,14 @@
 import React from 'react'
 import '../App.css';
-import { MyAwesomeGrid } from '../component/Grid';
+import {CustomGrid}  from '../component/Grid.js'
 export const HomePage = ()=>{
 
     return(
-            <MyAwesomeGrid/>
+        <div>
+            
+            <CustomGrid/>
+    
+        </div>
+           
     )
 }
