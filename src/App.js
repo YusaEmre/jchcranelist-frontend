@@ -1,25 +1,24 @@
 import './App.css';
-import { Route, Routes, Navigate} from "react-router-dom";
+import { Route, Routes } from 'react-router-dom';
 import { Navbar } from './component/Navbar';
 import { HomePage } from './Pages/HomePage';
 import { UpNav } from './component/UpNav';
 import Login from './Pages/Logins';
-import AdminPage from './Pages/AdminPage';
 import Register from './Pages/Register';
 function App() {
+  const token = localStorage.getItem('token');
+  console.log(token);
   return (
-    <div className=''>
-      <UpNav/>
-      <Navbar/>
+    <div className="">
+      <UpNav />
+      <Navbar />
       <Routes>
-      <Route exact path="/" element={<HomePage/>} />
-      <Route path="/login" element={<Login/>} />
-      <Route exact path="/dashboard" element={<AdminPage/>} />
-      <Route path="/" element={<Navigate replace to="/"/>}/>
-      <Route path='/register' element={<Register/>}/>
-    </Routes>
+        <Route exact path="/" element={<HomePage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </div>
-      );
+  );
 }
 
 export default App;
