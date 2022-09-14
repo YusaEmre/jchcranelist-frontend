@@ -17,7 +17,22 @@ background-color: #191d4b;
   background-color: #f74a00;
 }
 
-.vehicle-page{
-  position: relative;
-  top: 5rem;
+.edit-button{
+    background-color: #ec6e00;
+    color:white;
+    border:none;
 }
+
+.select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+  font-size: 18px;
+}
+.table{
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+

@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d97c14b-bff3-4fd4-8678-77801e4bde07" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pages/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/HomePage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Grid.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Grid.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pages/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/AdminGrid.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/AdminGrid.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,14 +22,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "nodejs_package_manager_path": "npm"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -42,6 +39,7 @@
       <option name="presentableId" value="Default" />
       <updated>1663078149639</updated>
       <workItem from="1663078153580" duration="6000" />
+      <workItem from="1663175731515" duration="19000" />
     </task>
     <servers />
   </component>
