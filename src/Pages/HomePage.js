@@ -5,10 +5,10 @@ export const HomePage = ()=>{
 
     return(
         <div>
-            
             <CustomGrid/>
-    
         </div>
            
     )
 }
+
+export default HomePage;
