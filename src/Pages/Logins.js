@@ -15,11 +15,11 @@ const Login = (props) => {
 
     const disabled = username && password
     return (
-        <div className="container">
+        <div className="container text-center">
             <form>
             <Input name="username" label="Username" onChange={(change)=>{setUsername(change.target.value)}}></Input>
             <Input name="password" label="Password" type="password" onChange={(change)=>{setPassword(change.target.value)}} ></Input>
-            <div className="text-center">
+            <div className="button-rigth-margin">
                 <button onClick={handleLogin} type="submit" className="button-background mt-4" disabled={!disabled}>Sign In</button>
             </div>
             </form>
