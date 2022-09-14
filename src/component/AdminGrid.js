@@ -1,13 +1,22 @@
 import React from 'react';
 import axios from 'axios';
+import '../App.css';
 
 function AdminGrid({ fetchedData, month }) {
-  const handleChange = (e) => {};
+  const handleChange = (e) => {
+  };
 
+
+  const options = [
+    { value: '0', label: '0' },
+    { value: 'AV', label: 'AV' },
+    { value: 'JO', label: 'JO' },
+    { value: 'P90', label: '90' } 
+  ];
   return (
     <div>
       {fetchedData ? (
-        <table className="table-sm table-striped table-bordered table-responsive overflow-y: hidden">
+        <table className="table table-sm table-striped table-bordered table-responsive overflow-y: hidden">
           <thead>
             <tr style={{ textAlign: 'center' }}>
               <th colSpan={fetchedData[0].workingStatusList.length + 5}>
@@ -32,39 +41,36 @@ function AdminGrid({ fetchedData, month }) {
               fetchedData.map((data) => (
                 <tr key={data.id}>
                   <td>
-                    <select
-                      value={data.fleetNo}
-                      name="fleetNo"
-                      onChange={handleChange}
-                    ></select>
+                    {data.fleetNo}
                   </td>
                   <td>
-                    <select
-                      value={data.vehicleModel}
-                      name="vehicleModel"
-                      onChange={handleChange}
-                    ></select>
+                    {data.vehicleModel}
                   </td>
                   <td>
-                    {' '}
-                    <select
-                      value={data.size}
-                      name="size"
-                      onChange={handleChange}
-                    ></select>
+                    {data.size}
                   </td>
                   <td>
-                    {' '}
-                    <select
-                      value={data.operator}
-                      name="operator"
-                      onChange={handleChange}
-                    ></select>
+                  {data.operator}
                   </td>
                   {data.workingStatusList.map((status) => (
-                    <td>{status.workingStatus.statusName}</td>
+                    <td><select className='select' style={{width:30}}>
+                     {options.map((option) => (
+              <option value={option.value}>{option.label}</option>
+            ))}
+                  </select></td>
+                                     
                   ))}
+                   <td>0</td>
+                   <td style={{textAlign: "center"}} >
+                   <button
+          type="submit"
+          className="edit-button"  
+        >
+          Edit
+        </button>
+                   </td>
                 </tr>
+                
               ))}
           </tbody>
         </table>

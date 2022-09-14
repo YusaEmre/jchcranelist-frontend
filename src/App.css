@@ -16,6 +16,23 @@ background-color: #191d4b;
 .button-background:hover{
   background-color: #f74a00;
 }
-.register-button-background{
-  background-color: ;
+
+.edit-button{
+    background-color: #ec6e00;
+    color:white;
+    border:none;
 }
+
+.select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+  font-size: 18px;
+}
+.table{
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
