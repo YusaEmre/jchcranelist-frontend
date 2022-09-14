@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Routes, Navigate} from "react-router-dom";
+import { Route, Routes } from 'react-router-dom';
 import { Navbar } from './component/Navbar';
 import { HomePage } from './Pages/HomePage';
 import { UpNav } from './component/UpNav';
@@ -16,9 +16,9 @@ function App(props) {
 function App() {
 >>>>>>> c834d40 (sad)
   return (
-    <div className=''>
-      <UpNav/>
-      <Navbar/>
+    <div className="">
+      <UpNav />
+      <Navbar />
       <Routes>
       <Route exact path="/" element={<HomePage/>} />
       <Route path="/login" element={<Login/>} />
@@ -28,7 +28,7 @@ function App() {
       <Route path='/addVehicle' element={<AddVehiclePage/>}/>
     </Routes>
     </div>
-      );
+  );
 }
 
 export default App;
