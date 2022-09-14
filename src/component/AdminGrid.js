@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import DropDown from './Dropdown';
 import axios from 'axios';
 
-function CustomGrid() {
+function AdminGrid() {
 
   const [month, setMonth] = useState('January');
   const [fetchedData, setFetchedData] = useState();
@@ -70,4 +70,4 @@ function CustomGrid() {
     );
 }
 
-export { CustomGrid };
+export { AdminGrid };
