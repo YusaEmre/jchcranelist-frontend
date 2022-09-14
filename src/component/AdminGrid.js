@@ -2,7 +2,11 @@ import React, { useState,useEffect } from 'react';
 import DropDown from './Dropdown';
 import axios from 'axios';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { authHeader } from '../service/LoginService';
+=======
+
+>>>>>>> c834d40 (sad)
 =======
 
 >>>>>>> c834d40 (sad)
@@ -13,9 +17,12 @@ function AdminGrid() {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const fetchData = async () => {
    const resp =  await axios.get(`http://localhost:8080/api/vehicle?month=${month}`,{headers:authHeader()})
 =======
+=======
+>>>>>>> c834d40 (sad)
 
 
 
@@ -23,6 +30,9 @@ function AdminGrid() {
    const resp =  await axios.get(`http://localhost:8080/api/vehicle?month=${month}`,{headers: {
     'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dXNhMUBnbWFpbC5jb20iLCJpYXQiOjE2NjMxNDMyMjksImV4cCI6MTY2MzE3OTIyOX0.MvIo4jdGN_U5u9jXTB4NTYoBsXXJxc_0oYrnw6LLX18rXd_R9W93aojrT5x_Q4EX0eY64DKatD2LBm3J6ul5mQ'
   }})
+<<<<<<< HEAD
+>>>>>>> c834d40 (sad)
+=======
 >>>>>>> c834d40 (sad)
    setFetchedData(resp.data);
    
@@ -33,11 +43,17 @@ function AdminGrid() {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> c834d40 (sad)
   
 
     
 
+<<<<<<< HEAD
+>>>>>>> c834d40 (sad)
+=======
 >>>>>>> c834d40 (sad)
     return (
         <div className="container">
