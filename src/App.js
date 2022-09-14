@@ -5,9 +5,13 @@ import { HomePage } from './Pages/HomePage';
 import { UpNav } from './component/UpNav';
 import Login from './Pages/Logins';
 import AdminPage from './Pages/AdminPage';
+<<<<<<< HEAD
 import Register from './Pages/Register';
 import AddVehiclePage from './Pages/AddVehiclePage';
 function App(props) {
+=======
+function App() {
+>>>>>>> c834d40 (sad)
   return (
     <div className=''>
       <UpNav/>

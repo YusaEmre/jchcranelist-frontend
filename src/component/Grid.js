@@ -6,143 +6,25 @@ function CustomGrid() {
 
   const [month, setMonth] = useState('January');
   const [fetchedData, setFetchedData] = useState();
+
+
+
+
+
   const fetchData = async () => {
    const resp =  await axios.get(`http://localhost:8080/api/vehicle?month=${month}`,{headers: {
-    'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dXNhMUBnbWFpbC5jb20iLCJpYXQiOjE2NjMwNzMwNDEsImV4cCI6MTY2MzEwOTA0MX0.DeER81BztT0t3iAMr7ODeMcKTZ63bmaEGlXk20-LdODvphbSrAutx9wKOsCGFWDA4FtNw_gYP1AE2YmsLQd_YQ'
+    'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dXNhMUBnbWFpbC5jb20iLCJpYXQiOjE2NjMxNDMyMjksImV4cCI6MTY2MzE3OTIyOX0.MvIo4jdGN_U5u9jXTB4NTYoBsXXJxc_0oYrnw6LLX18rXd_R9W93aojrT5x_Q4EX0eY64DKatD2LBm3J6ul5mQ'
   }})
-   setFetchedData(resp)
+   setFetchedData(resp.data);
+   
   }
   useEffect(() => {
     fetchData();
-    console.log(fetchData);
   },[month])
-  
+
+
   
 
-  const data = [
-    {
-      start: "1",
-      state: "JO"
-    },
-    {
-      start: "2",
-      state: "AV"
-    },
-    {
-      start: "3",
-      state: "0"
-    },
-    {
-      start: "4",
-      state: "JO"
-    },
-    {
-      start: "5",
-      state: "AV"
-    },
-    {
-      start: "6",
-      state: "0"
-    },
-    {
-      start: "7",
-      state: "JO"
-    },
-    {
-      start: "8",
-      state: "AV"
-    },
-    {
-      start: "9",
-      state: "0"
-    },
-    {
-      start: "10",
-      state: "JO"
-    },
-    {
-      start: "11",
-      state: "AV"
-    },
-    {
-      start: "12",
-      state: "0"
-    }, {
-      start: "13",
-      state: "JO"
-    },
-    {
-      start: "14",
-      state: "AV"
-    },
-    {
-      start: "15",
-      state: "0"
-    }, {
-      start: "16",
-      state: "JO"
-    },
-    {
-      start: "17",
-      state: "AV"
-    },
-    {
-      start: "18",
-      state: "0"
-    }, {
-      start: "19",
-      state: "JO"
-    },
-    {
-      start: "20",
-      state: "AV"
-    },
-    {
-      start: "21",
-      state: "0"
-    },
-    {
-      start: "22",
-      state: "JO"
-    },
-    {
-      start: "23",
-      state: "AV"
-    },
-    {
-      start: "24",
-      state: "0"
-    },
-    {
-      start: "25",
-      state: "JO"
-    },
-    {
-      start: "26",
-      state: "AV"
-    },
-    {
-      start: "27",
-      state: "0"
-    },
-    {
-      start: "28",
-      state: "JO"
-    },
-    {
-      start: "29",
-      state: "AV"
-    },
-    {
-      start: "30",
-      state: "0"
-    }
-  ];
-  
-    const [users, setUsers] = useState([
-        { id: 1, firstName: 'LH136', lastName: 'LTM 1250-5.1', email: '250t', role: 'Welcome' },
-        { id: 1, firstName: 'LH129', lastName: 'LTM 1250-6.1', email: '250t', role: 'Immanuel' },
-    ]);
     
 
     return (
@@ -152,7 +34,7 @@ function CustomGrid() {
             {fetchedData ? <table className="table-sm table-striped table-bordered table-responsive overflow-y: hidden">
             <thead>
               <tr style={{textAlign: "center"}} >
-                <th colSpan={data.length+5}>
+                <th colSpan={fetchedData[0].workingStatusList.length+5}>
                   {month}
                 </th>
               </tr>
@@ -164,24 +46,22 @@ function CustomGrid() {
                         <th >Crane Model</th>
                         <th >Size</th>
                         <th >Operator</th>
-                        {data.map((i) => (
-                        <th  key={i}>{i?.start}</th>
-                                    ))}
+                        {fetchedData[0].workingStatusList.map(status=>
+                          <th>{status.day+1}</th>)}
                         <th>Total Working Days</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    {users && users.map(user =>
-                        <tr key={user.id}>
-                            <td >{user.firstName}</td>
-                            <td >{user.lastName}</td>
-                            <td >{user.email}</td>
-                            <td >{user.role}</td>
-                            {data.map((i) => (
-                            <td   key={i}>{i?.state}</td>
-                                           ))}
-                            <td >15</td>
+                    {fetchedData && fetchedData.map(data =>
+                        <tr key={data.id}>
+                            <td >{data.fleetNo}</td>
+                            <td >{data.vehicleModel}</td>
+                            <td >{data.size}</td>
+                            <td >{data.operator}</td>
+                            {data.workingStatusList.map(status=>
+                              <td>{status.workingStatus.statusName}</td>
+                              )}
                         </tr>
                     )}
                 </tbody>
