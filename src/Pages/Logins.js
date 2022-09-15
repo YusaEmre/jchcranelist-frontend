@@ -10,7 +10,8 @@ const Login = (props) => {
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
       const resp = await axios.post('http://localhost:8080/api/user/login', {
         email: username,
@@ -18,6 +19,7 @@ const Login = (props) => {
       });
       localStorage.setItem('token', resp.data.token);
       navigate('/');
+      window.location.reload();
     } catch (error) {
       setServerError(error);
     }

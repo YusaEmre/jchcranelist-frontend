@@ -1,21 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import '../App.css';
 
-function AdminGrid({ fetchedData, month }) {
-  const handleChange = (e) => {
+function AdminGrid({ token, fetchedData, month }) {
+  const [data, setData] = useState();
+
+  const handleChange = (e, data, index) => {
+    setData(data);
+    let copyData = data;
+    const value = e.target.value;
+    e.preventDefault();
+
+    console.log(e.target.value);
+    copyData.workingStatusList[index].workingStatus.statusName = value;
+    options.map((option) => {
+      if (option.label === value) {
+        copyData.workingStatusList[index].workingStatus.id = option.id;
+      }
+    });
+    setData(copyData);
   };
-
-
+  const handleEdit = async (e) => {
+    e.preventDefault();
+    console.log(data);
+    const resp = await axios.put(
+      `http://localhost:8080/api/vehicle/edit`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  };
   const options = [
-    { value: '0', label: '0' },
-    { value: 'AV', label: 'AV' },
-    { value: 'JO', label: 'JO' },
-    { value: 'P90', label: '90' } 
+    { id: 1, label: '0' },
+    { id: 2, label: 'JO' },
+    { id: 3, label: 'AV' },
+    { id: 4, label: 'P90' },
+    { id: 5, label: 'LT' },
+    { id: 6, label: 'QT' },
+    { id: 7, label: 'P50' },
+    { id: 8, label: 'P75' },
+    { id: 9, label: 'SE' },
+    { id: 10, label: 'BD' },
   ];
   return (
     <div>
-      {fetchedData ? (
+      {fetchedData.length > 0 ? (
         <table className="table table-sm table-striped table-bordered table-responsive overflow-y: hidden">
           <thead>
             <tr style={{ textAlign: 'center' }}>
@@ -40,37 +72,36 @@ function AdminGrid({ fetchedData, month }) {
             {fetchedData &&
               fetchedData.map((data) => (
                 <tr key={data.id}>
-                  <td>
-                    {data.fleetNo}
-                  </td>
-                  <td>
-                    {data.vehicleModel}
-                  </td>
-                  <td>
-                    {data.size}
-                  </td>
-                  <td>
-                  {data.operator}
-                  </td>
-                  {data.workingStatusList.map((status) => (
-                    <td><select className='select' style={{width:30}}>
-                     {options.map((option) => (
-              <option value={option.value}>{option.label}</option>
-            ))}
-                  </select></td>
-                                     
+                  <td>{data.fleetNo}</td>
+                  <td>{data.vehicleModel}</td>
+                  <td>{data.size}</td>
+                  <td>{data.operator}</td>
+                  {data.workingStatusList.map((status, index) => (
+                    <td>
+                      <select
+                        className="select"
+                        id={status.id}
+                        defaultValue={status.workingStatus.statusName}
+                        style={{ width: 30 }}
+                        onChange={(e) => handleChange(e, data, index)}
+                      >
+                        {options.map((option) => (
+                          <option>{option.label}</option>
+                        ))}
+                      </select>
+                    </td>
                   ))}
-                   <td>0</td>
-                   <td style={{textAlign: "center"}} >
-                   <button
-          type="submit"
-          className="edit-button"  
-        >
-          Edit
-        </button>
-                   </td>
+                  <td>0</td>
+                  <td style={{ textAlign: 'center' }}>
+                    <button
+                      onClick={handleEdit}
+                      type="submit"
+                      className="edit-button"
+                    >
+                      Edit
+                    </button>
+                  </td>
                 </tr>
-                
               ))}
           </tbody>
         </table>

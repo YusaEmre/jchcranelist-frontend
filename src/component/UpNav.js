@@ -20,20 +20,22 @@ export const UpNav = () => {
                 Register
               </Link>
             </li>
+          </ul>
+        ) : (
+          <ul className="navbar-nav ms-auto">
             <li>
               <Link to="/addVehicle" className="nav-link">
                 Add Vehicle
               </Link>
             </li>
-          </ul>
-        ) : (
-          <ul className="navbar-nav ms-auto">
             <li>
               <Link
                 to="/"
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   localStorage.removeItem('token');
                   setToken(null);
+                  window.location.reload();
                 }}
                 className="nav-link"
               >

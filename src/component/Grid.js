@@ -4,18 +4,13 @@ import axios from 'axios';
 import { UserGrid } from './UserGrid';
 import { AdminGrid } from './AdminGrid';
 
-function CustomGrid({ currentUser }) {
+function CustomGrid() {
   const [month, setMonth] = useState('January');
-  const [fetchedData, setFetchedData] = useState();
-  const [token, setToken] = useState();
+  const [fetchedData, setFetchedData] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem('token'));
   const fetchData = async (token) => {
     const resp = await axios.get(
-      `http://localhost:8080/api/vehicle?month=${month}`,
-      {
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
-      }
+      `http://localhost:8080/api/vehicle?month=${month}`
     );
     setFetchedData(resp.data);
   };
@@ -31,7 +26,7 @@ function CustomGrid({ currentUser }) {
       {!token ? (
         <UserGrid month={month} fetchedData={fetchedData} />
       ) : (
-        <AdminGrid month={month} fetchedData={fetchedData} />
+        <AdminGrid token={token} month={month} fetchedData={fetchedData} />
       )}
     </div>
   );

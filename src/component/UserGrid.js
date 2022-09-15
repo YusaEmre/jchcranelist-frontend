@@ -3,7 +3,7 @@ import React from 'react';
 function UserGrid({ fetchedData, month }) {
   return (
     <div>
-      {fetchedData ? (
+      {fetchedData.length > 0 ? (
         <table className="table-sm table-striped table-bordered table-responsive overflow-y: hidden">
           <thead>
             <tr style={{ textAlign: 'center' }}>

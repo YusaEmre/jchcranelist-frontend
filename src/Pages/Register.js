@@ -17,9 +17,8 @@ const Register = () => {
       email: email,
       phoneNumber: phoneNumber,
       password: password,
-      role:1
+      role: 1,
     });
-    console.log(resp);
   };
 
   const disabled = name && surname && email && phoneNumber && password;
