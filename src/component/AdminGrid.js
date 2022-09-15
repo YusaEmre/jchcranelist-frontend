@@ -1,20 +1,15 @@
 import React, { useState,useEffect } from 'react';
 import DropDown from './Dropdown';
 import axios from 'axios';
-
+import { authHeader } from '../service/LoginService';
 function AdminGrid() {
 
   const [month, setMonth] = useState('January');
   const [fetchedData, setFetchedData] = useState();
 
 
-
-
-
   const fetchData = async () => {
-   const resp =  await axios.get(`http://localhost:8080/api/vehicle?month=${month}`,{headers: {
-    'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5dXNhMUBnbWFpbC5jb20iLCJpYXQiOjE2NjMxNDMyMjksImV4cCI6MTY2MzE3OTIyOX0.MvIo4jdGN_U5u9jXTB4NTYoBsXXJxc_0oYrnw6LLX18rXd_R9W93aojrT5x_Q4EX0eY64DKatD2LBm3J6ul5mQ'
-  }})
+   const resp =  await axios.get(`http://localhost:8080/api/vehicle?month=${month}`,{headers:authHeader()})
    setFetchedData(resp.data);
    
   }
@@ -22,10 +17,6 @@ function AdminGrid() {
     fetchData();
   },[month])
 
-
-  
-
-    
 
     return (
         <div className="container">

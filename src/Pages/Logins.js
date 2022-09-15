@@ -44,7 +44,7 @@ const Login = (props) => {
                 <button onClick={handleLogin} type="submit" className="button-background mt-4" disabled={!disabled}>Sign In</button>
             </div>
             </form>
-            <p>{isError}</p>zz
+            <p>{isError}</p>
         </div>
     )
 }

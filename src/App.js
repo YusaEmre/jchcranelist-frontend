@@ -5,7 +5,9 @@ import { HomePage } from './Pages/HomePage';
 import { UpNav } from './component/UpNav';
 import Login from './Pages/Logins';
 import AdminPage from './Pages/AdminPage';
-function App() {
+import Register from './Pages/Register';
+import AddVehiclePage from './Pages/AddVehiclePage';
+function App(props) {
   return (
     <div className=''>
       <UpNav/>
@@ -16,6 +18,7 @@ function App() {
       <Route exact path="/dashboard" element={<AdminPage/>} />
       <Route path="/" element={<Navigate replace to="/"/>}/>
       <Route path='/register' element={<Register/>}/>
+      <Route path='/addVehicle' element={<AddVehiclePage/>}/>
     </Routes>
     </div>
       );
