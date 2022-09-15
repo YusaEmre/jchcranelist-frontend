@@ -20,6 +20,11 @@ export const UpNav = () => {
                 Register
               </Link>
             </li>
+            <li>
+              <Link to="/addVehicle" className="nav-link">
+                Add Vehicle
+              </Link>
+            </li>
           </ul>
         ) : (
           <ul className="navbar-nav ms-auto">

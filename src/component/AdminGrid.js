@@ -81,5 +81,4 @@ function AdminGrid({ fetchedData, month }) {
   );
 }
 
-  }}
 export { AdminGrid };
