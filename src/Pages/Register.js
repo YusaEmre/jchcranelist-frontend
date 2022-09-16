@@ -2,23 +2,39 @@ import React, { useState } from 'react';
 import Input from '../component/Input';
 import axios from 'axios';
 import '../App.css';
-
+import {toast,ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Register = () => {
   const [name, setName] = useState();
   const [surname, setSurname] = useState();
   const [email, setEmail] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
   const [password, setPassword] = useState();
+  
+  const [token, setToken] = useState(localStorage.getItem('token'));
+
 
   const handleRegister = async () => {
-    const resp = await axios.post('http://localhost:8080/api/user/register', {
-      name: name,
-      surname: surname,
-      email: email,
-      phoneNumber: phoneNumber,
-      password: password,
-      role: 1,
-    });
+
+    try{
+      const resp = await axios.post('http://localhost:8080/api/user/register', {
+        name: name,
+        surname: surname,
+        email: email,
+        phoneNumber: phoneNumber,
+        password: password,
+        role: 1,
+      },{
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      });
+      toast.success(`register success`)
+    }
+    catch(error){
+      toast.error(error.response.data.error)
+    }
+  
   };
 
   const disabled = name && surname && email && phoneNumber && password;
@@ -62,6 +78,9 @@ const Register = () => {
           Sign In
         </button>
       </div>
+      <ToastContainer position='bottom-right'
+        autoClose={3000}
+      />
     </div>
   );
 };

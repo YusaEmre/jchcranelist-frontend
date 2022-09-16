@@ -15,14 +15,14 @@ export const UpNav = () => {
                 Login
               </Link>
             </li>
-            <li>
+          </ul>
+        ) : (
+          <ul className="navbar-nav ms-auto">
+             <li>
               <Link to="/register" className="nav-link">
                 Register
               </Link>
             </li>
-          </ul>
-        ) : (
-          <ul className="navbar-nav ms-auto">
             <li>
               <Link to="/addVehicle" className="nav-link">
                 Add Vehicle

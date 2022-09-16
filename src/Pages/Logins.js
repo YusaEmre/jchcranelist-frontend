@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../component/Input';
 import '../App.css';
 import axios from 'axios';
+import {toast,ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Login = (props) => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
@@ -21,6 +23,9 @@ const Login = (props) => {
       navigate('/');
       window.location.reload();
     } catch (error) {
+      if(error.response.data.status == 401){
+        toast.error("failed login, Unauthorized")
+      }
       setServerError(error);
     }
   };
@@ -55,6 +60,9 @@ const Login = (props) => {
           </button>
         </div>
       </form>
+      <ToastContainer position='bottom-right'
+          autoClose={3000}
+      />
     </div>
   );
 };

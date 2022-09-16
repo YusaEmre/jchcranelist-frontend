@@ -1,38 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../App.css';
-
+import {toast,ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function AdminGrid({ token, fetchedData, month }) {
   const [data, setData] = useState();
+  const [count,setCount] = useState();
 
-  const handleChange = (e, data, index) => {
-    setData(data);
-    let copyData = data;
-    const value = e.target.value;
-    e.preventDefault();
-
-    console.log(e.target.value);
-    copyData.workingStatusList[index].workingStatus.statusName = value;
-    options.map((option) => {
-      if (option.label === value) {
-        copyData.workingStatusList[index].workingStatus.id = option.id;
-      }
-    });
-    setData(copyData);
-  };
-  const handleEdit = async (e) => {
-    e.preventDefault();
-    console.log(data);
-    const resp = await axios.put(
-      `http://localhost:8080/api/vehicle/edit`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  };
   const options = [
     { id: 1, label: '0' },
     { id: 2, label: 'JO' },
@@ -45,6 +19,40 @@ function AdminGrid({ token, fetchedData, month }) {
     { id: 9, label: 'SE' },
     { id: 10, label: 'BD' },
   ];
+
+  const handleChange = (e, data, index) => {
+    setData(data);
+    let copyData = data;
+    const value = e.target.value;
+    e.preventDefault();
+    copyData.workingStatusList[index].workingStatus.statusName = value;
+    options.map((option) => {
+      if (option.label === value) {
+        copyData.workingStatusList[index].workingStatus.id = option.id;
+      }
+    });
+    setData(copyData);
+  };
+  const handleEdit = async (e) => {
+    e.preventDefault();
+    try{
+      const resp = await axios.put(
+        `http://localhost:8080/api/vehicle/edit`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.info(`${data.vehicleModel} updated`,1)
+    }    
+    catch(error){
+      toast.error(`not updated ${error}`)
+    }
+  
+  };
+
   return (
     <div>
       {fetchedData.length > 0 ? (
@@ -80,9 +88,9 @@ function AdminGrid({ token, fetchedData, month }) {
                     <td>
                       <select
                         className="select"
-                        id={status.id}
+                        id="mySelect"
                         defaultValue={status.workingStatus.statusName}
-                        style={{ width: 30 }}
+                        style={{ width: 30, backgroundColor:"blue"}}
                         onChange={(e) => handleChange(e, data, index)}
                       >
                         {options.map((option) => (
@@ -108,8 +116,10 @@ function AdminGrid({ token, fetchedData, month }) {
       ) : (
         <></>
       )}
+              <ToastContainer position="bottom-right"
+              autoClose={3000}
+              />
     </div>
   );
-}
-
+      }
 export { AdminGrid };
