@@ -20,7 +20,7 @@ export const UpNav = () => {
           <ul className="navbar-nav ms-auto">
              <li>
               <Link to="/register" className="nav-link">
-                Register
+                Add User
               </Link>
             </li>
             <li>
