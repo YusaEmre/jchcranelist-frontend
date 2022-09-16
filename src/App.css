@@ -23,7 +23,8 @@ background-color: #191d4b;
     border:none;
 }
 
-.select {
+
+td select {
   -webkit-appearance: none;
   -moz-appearance: none;
   text-indent: 1px;
@@ -39,15 +40,32 @@ background-color: #191d4b;
   background-color: wheat;
 }
 .JO{
-background-color: pink;
+background-color:  orange;
 }
 .P50{
-  background-color: blueviolet;
+  background-color: lightblue;
 
 }
 .P75{
-  background-color:#f74a00;
+  background-color:lightseagreen;
+}
+
+.P90{
+  background-color:blue;
 }
 .color{
   background-color: beige;
+}
+
+.QT{
+  background-color:lightpink;
+}
+.LT{
+  background-color:lightgreen;
+}
+.SE{
+  background-color:yellow;
+}
+.BD{
+  background-color:red;
 }

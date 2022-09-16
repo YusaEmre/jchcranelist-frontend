@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function AdminGrid({ token, fetchedData, month }) {
   const [data, setData] = useState();
   const [count,setCount] = useState();
-
+  const [selectValue, setSelectValue] = useState([]);
   const options = [
     { id: 1, label: '0' },
     { id: 2, label: 'JO' },
@@ -20,10 +20,14 @@ function AdminGrid({ token, fetchedData, month }) {
     { id: 10, label: 'BD' },
   ];
 
-  const handleChange = (e, data, index) => {
+  const handleChange = (e,data,index) => {
+    let id = e.target.id
+    
+    setSelectValue([...selectValue,{id:e.target.id,value:e.target.value}])
     setData(data);
     let copyData = data;
     const value = e.target.value;
+
     e.preventDefault();
     copyData.workingStatusList[index].workingStatus.statusName = value;
     options.map((option) => {
@@ -52,7 +56,8 @@ function AdminGrid({ token, fetchedData, month }) {
     }
   
   };
-
+  console.log(selectValue)
+  
   return (
     <div>
       {fetchedData.length > 0 ? (
@@ -78,28 +83,30 @@ function AdminGrid({ token, fetchedData, month }) {
           </thead>
           <tbody>
             {fetchedData &&
-              fetchedData.map((data) => (
+              fetchedData.map((data,dataIndex) => (
                 <tr key={data.id}>
                   <td>{data.fleetNo}</td>
                   <td>{data.vehicleModel}</td>
                   <td>{data.size}</td>
                   <td>{data.operator}</td>
                   {data.workingStatusList.map((status, index) => (
+                  
                     <td>
                       <select
-                        className="select"
-                        id="mySelect"
+                      className={selectValue.some(e => e.id === `${dataIndex} + ${index}`) ? "JO" : ""}
+                        id={`${dataIndex} + ${index}`}
                         defaultValue={status.workingStatus.statusName}
-                        style={{ width: 30, backgroundColor:"blue"}}
-                        onChange={(e) => handleChange(e, data, index)}
+                        style={{ width: 30}}
+                        onChange={(e) => handleChange(e,data,index,this)}
                       >
                         {options.map((option) => (
-                          <option>{option.label}</option>
+                          <option className={option.label}>{option.label}</option>
                         ))}
                       </select>
                     </td>
+                    
                   ))}
-                  <td>0</td>
+                  <td></td>
                   <td style={{ textAlign: 'center' }}>
                     <button
                       onClick={handleEdit}

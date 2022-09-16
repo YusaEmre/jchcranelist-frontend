@@ -3,6 +3,8 @@ import '../App.css';
 import Input from '../component/Input';
 import { useState } from 'react';
 import axios from 'axios';
+import {toast,ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { authHeader, URL } from '../service/LoginService';
 
 const AddVehiclePage = () => {
@@ -37,6 +39,7 @@ const AddVehiclePage = () => {
           },
         }
       );
+      toast.info(`${data.vehicleModel} added`,1)
       setMessage('Successfully added a vehicle');
     } catch (er) {
       console.log(er.message);
@@ -90,6 +93,9 @@ const AddVehiclePage = () => {
           </button>
         </div>
       </div>
+      <ToastContainer position="bottom-right"
+              autoClose={3000}
+              />
     </div>
   );
 };
