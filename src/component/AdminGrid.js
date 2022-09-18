@@ -5,7 +5,6 @@ import {toast,ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function AdminGrid({ token, fetchedData, month }) {
   const [data, setData] = useState();
-  const [count,setCount] = useState();
   const [selectValue, setSelectValue] = useState([]);
   const options = [
     { id: 1, label: '0' },
@@ -62,7 +61,7 @@ function AdminGrid({ token, fetchedData, month }) {
     <div>
       {fetchedData.length > 0 ? (
         <table className="table table-sm table-striped table-bordered table-responsive overflow-y: hidden">
-          <thead>
+          <thead className='bg-light'>
             <tr style={{ textAlign: 'center' }}>
               <th colSpan={fetchedData[0].workingStatusList.length + 5}>
                 {month}
@@ -92,8 +91,7 @@ function AdminGrid({ token, fetchedData, month }) {
                   {data.workingStatusList.map((status, index) => (
                   
                     <td>
-                      <select
-                      className={selectValue.some(e => e.id === `${dataIndex} + ${index}`) ? "JO" : ""}
+                      <select className={status.workingStatus.statusName}
                         id={`${dataIndex} + ${index}`}
                         defaultValue={status.workingStatus.statusName}
                         style={{ width: 30}}
@@ -130,3 +128,5 @@ function AdminGrid({ token, fetchedData, month }) {
   );
       }
 export { AdminGrid };
+
+//className={selectValue.some(e => e.id === `${dataIndex} + ${index}`) ? "JO" : ""
