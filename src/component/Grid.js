@@ -5,11 +5,10 @@ import { AdminGrid } from './AdminGrid';
 import DatePicker from 'react-datepicker';
 import moment from 'moment/moment';
 import 'react-datepicker/dist/react-datepicker.css';
-import { wait } from '@testing-library/user-event/dist/utils';
+import SlideSettings from './SlideSettingsModal';
 
 function CustomGrid() {
-  const [date, setDate] = useState();
-  const [loop, setLoop] = useState(false);
+  const [date, setDate] = useState(new Date(2022, 6));
   const [fetchedData, setFetchedData] = useState([]);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const fetchData = async (token) => {
@@ -24,15 +23,21 @@ function CustomGrid() {
     fetchData(token);
   }, [date]);
 
-  const Loop = (e) => {
-    const year = moment(date).format('YYYY');
+  const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
-    for (let index = 0; index < 12; index++) {
-      setDate(new Date(date).setMonth(index));
-      if (fetchData.length > 0) {
-        wait(100);
-      } else {
-        wait();
+  const Loop = async (e) => {
+    let year = moment(date).format('YYYY');
+    if (e.target.checked) {
+      for (let index = 6; index < 12; index++) {
+        if (index === 11 && e.target.checked) {
+          index = 0;
+          let newDate = moment(date).add(1, 'years');
+          year = moment(newDate).format('YYYY');
+        }
+        if (fetchedData.length > 0) {
+          await sleep(5000);
+        }
+        setDate(new Date(year, index));
       }
     }
   };
@@ -40,33 +45,44 @@ function CustomGrid() {
   return (
     <div className="container">
       <h3 className="p-3 text-center">List of Vehicles</h3>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          marginBottom: 30,
-        }}
-      >
-        <div class="form-check form-switch">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            role="switch"
-            id="flexSwitchCheckDefault"
-            onChange={(e) => Loop(e.target.checked)}
-          />
-          <label class="form-check-label" for="flexSwitchCheckDefault">
-            {moment(date).format('YYYY')} Slide
-          </label>
+      <div className="d-flex row-reverse mb-2">
+        <div className="col-md-5 col-5">
+          {' '}
+          <div className="form-check form-switch">
+            <label
+              className="form-check-label mt-1"
+              htmlFor="flexSwitchCheckDefault"
+            >
+              Table Slide
+            </label>
+            <input
+              className="form-check-input mt-2"
+              type="checkbox"
+              role="switch"
+              id="flexSwitchCheckDefault"
+              onChange={(e) => Loop(e)}
+            />
+
+            <i
+              className="bi btn bi-gear-fill ms-2 p-0"
+              data-toggle="modal"
+              data-target="#exampleModal"
+            ></i>
+
+            <SlideSettings />
+          </div>
         </div>
-        <DatePicker
-          selected={date}
-          minDate={new Date('07-01-2022')}
-          onChange={(date) => setDate(date)}
-          selectsStart
-          dateFormat="MM/yyyy"
-          showMonthYearPicker
-        />
+        <div className="col-md-6"></div>
+        <div className="col-md-1">
+          <DatePicker
+            selected={date}
+            minDate={new Date('07-01-2022')}
+            onChange={(date) => setDate(date)}
+            selectsStart
+            dateFormat="MM/yyyy"
+            showMonthYearPicker
+          />
+        </div>
       </div>
 
       {/* <DropDown month={month} setMonth={setMonth} /> */}

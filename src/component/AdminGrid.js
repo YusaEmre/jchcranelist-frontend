@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
 import { toast, ToastContainer } from 'react-toastify';
@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function AdminGrid({ token, fetchedData, date }) {
   const [data, setData] = useState();
   const [selectValue, setSelectValue] = useState([]);
+  const [totalWorkingDays, setTotalWorkingDays] = useState(0);
   const options = [
     { id: 1, label: '0' },
     { id: 2, label: 'JO' },
@@ -22,8 +23,6 @@ function AdminGrid({ token, fetchedData, date }) {
   ];
 
   const handleChange = (e, data, index) => {
-    let id = e.target.id;
-
     setSelectValue([
       ...selectValue,
       { id: e.target.id, value: e.target.value },
@@ -44,30 +43,41 @@ function AdminGrid({ token, fetchedData, date }) {
   const handleEdit = async (e) => {
     e.preventDefault();
     try {
-      const resp = await axios.put(
-        `http://localhost:8080/api/vehicle/edit`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.put(`http://localhost:8080/api/vehicle/edit`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       toast.info(`${data.vehicleModel} updated`, 1);
     } catch (error) {
       toast.error(`not updated ${error}`);
     }
   };
-  console.log(selectValue);
+  const handleTotalWorkingDays = () => {
+    fetchedData.map((item) => {
+      item.workingStatusList.map((workingStatus) => {
+        if (workingStatus.workingStatus.statusName !== '0') {
+          setTotalWorkingDays(totalWorkingDays + 1);
+        }
+      });
+    });
+  };
+  useEffect(() => {
+    handleTotalWorkingDays();
+  }, [fetchedData]);
 
   return (
     <div>
       {fetchedData.length > 0 ? (
         <table className="table table-sm table-striped table-bordered table-responsive overflow-y: hidden">
           <thead className="bg-light">
-            <tr style={{ textAlign: 'center' }}>
-              <th colSpan={fetchedData[0].workingStatusList.length + 5}>
-                {moment(date).format('MMMM')}
+            <tr>
+              <th
+                className="text-center "
+                colSpan={fetchedData[0].workingStatusList.length}
+                style={{ color: '#ec6e00' }}
+              >
+                <h5>{moment(date).format('MMMM')}</h5>
               </th>
             </tr>
           </thead>
@@ -94,6 +104,7 @@ function AdminGrid({ token, fetchedData, date }) {
                   {data.workingStatusList.map((status, index) => (
                     <td>
                       <select
+                        key={index}
                         className={status.workingStatus.statusName}
                         id={`${dataIndex} + ${index}`}
                         defaultValue={status.workingStatus.statusName}
@@ -108,7 +119,7 @@ function AdminGrid({ token, fetchedData, date }) {
                       </select>
                     </td>
                   ))}
-                  <td></td>
+                  <td className="text-center">{totalWorkingDays}</td>
                   <td style={{ textAlign: 'center' }}>
                     <button
                       onClick={handleEdit}
@@ -123,7 +134,14 @@ function AdminGrid({ token, fetchedData, date }) {
           </tbody>
         </table>
       ) : (
-        <></>
+        <div className="text-center">
+          <h3>
+            There is no vehicle created for{' '}
+            <span style={{ color: '#ec6e00' }}>
+              {moment(date).format('MMMM')}
+            </span>
+          </h3>
+        </div>
       )}
       <ToastContainer position="bottom-right" autoClose={3000} />
     </div>

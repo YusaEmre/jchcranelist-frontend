@@ -15,7 +15,7 @@ const AddVehiclePage = () => {
   const [fleetNo, setFleetNo] = useState();
   const [operator, setOperator] = useState();
   const [size, setSize] = useState();
-  const [creationDate, setCreationDate] = useState();
+  const [creationDate, setCreationDate] = useState(Date.now());
   const [message, setMessage] = useState();
 
   const disabled = vehicleModel && fleetNo && operator && size && creationDate;
@@ -50,11 +50,10 @@ const AddVehiclePage = () => {
     }
   };
   return (
-    <div className="container">
-      <h4 className="text-center">Add Vehicle</h4>
-      <p className="text-center">{message}</p>
-
+    <div className="container w-50 d-flex justify-content-center">
       <div className="vehicle-page">
+        <h4 className="text-center">New Vehicle</h4>
+        <p className="text-center">{message}</p>
         <form>
           <Input
             name="vehicleModel"
@@ -78,6 +77,7 @@ const AddVehiclePage = () => {
             type="number"
             onChange={(change) => setSize(change.target.value)}
           ></Input>
+
           <DatePicker
             className="mt-2"
             selected={creationDate}
@@ -101,7 +101,7 @@ const AddVehiclePage = () => {
             className="button-background mt-4"
             disabled={!disabled}
           >
-            Create a Vehicle
+            Create a vehicle
           </button>
         </div>
       </div>
