@@ -1,28 +1,27 @@
 .App {
   text-align: center;
 }
-.back{
-background-color: #191d4b;
+.back {
+  background-color: #191d4b;
 }
-.back ul li :link{
-  color:white;
+.back ul li :link {
+  color: white;
 }
-.button-background{
+.button-background {
   background-color: #ec6e00;
-  color:white;
-  padding:0.3rem 1.5rem; 
-  border:none;
+  color: white;
+  padding: 0.3rem 1.5rem;
+  border: none;
 }
-.button-background:hover{
+.button-background:hover {
   background-color: #f74a00;
 }
 
-.edit-button{
-    background-color: #ec6e00;
-    color:white;
-    border:none;
+.edit-button {
+  background-color: #ec6e00;
+  color: white;
+  border: none;
 }
-
 
 td select {
   -webkit-appearance: none;
@@ -31,41 +30,52 @@ td select {
   text-overflow: '';
   font-size: 18px;
 }
-.table{
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
+.table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  opacity: 1;
+  animation: fadeIn 2s;
 }
-.AV{
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.AV {
   background-color: wheat;
 }
-.JO{
-background-color:  orange;
+.JO {
+  background-color: orange;
 }
-.P50{
+.P50 {
   background-color: lightblue;
+}
+.P75 {
+  background-color: lightseagreen;
+}
 
+.P90 {
+  background-color: blue;
 }
-.P75{
-  background-color:lightseagreen;
-}
-
-.P90{
-  background-color:blue;
-}
-.color{
+.color {
   background-color: beige;
 }
 
-.QT{
-  background-color:lightpink;
+.QT {
+  background-color: lightpink;
 }
-.LT{
-  background-color:lightgreen;
+.LT {
+  background-color: lightgreen;
 }
-.SE{
-  background-color:yellow;
+.SE {
+  background-color: yellow;
 }
-.BD{
-  background-color:red;
+.BD {
+  background-color: red;
 }

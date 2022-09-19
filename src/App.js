@@ -7,7 +7,7 @@ import Login from './Pages/Logins';
 import Register from './Pages/Register';
 import AddVehiclePage from './Pages/AddVehiclePage';
 import { useState } from 'react';
-function App({}) {
+const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token'));
   return (
     <div className="">
@@ -15,20 +15,13 @@ function App({}) {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<HomePage />} />
-        
-        {!token &&
-        <Route path="/login" element={<Login />} />
-        }
-        {token &&
-        <Route path="/register" element={<Register />} />
-        }
-        {token &&
-        <Route path="/addVehicle" element={<AddVehiclePage />} />
-        }
+
+        {!token && <Route path="/login" element={<Login />} />}
+        {token && <Route path="/register" element={<Register />} />}
+        {token && <Route path="/addVehicle" element={<AddVehiclePage />} />}
       </Routes>
     </div>
   );
-      };
-
+};
 
 export default App;

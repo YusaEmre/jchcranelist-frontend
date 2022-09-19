@@ -1,6 +1,7 @@
+import moment from 'moment';
 import React from 'react';
 
-function UserGrid({ fetchedData, month }) {
+function UserGrid({ fetchedData, date }) {
   return (
     <div>
       {fetchedData.length > 0 ? (
@@ -8,7 +9,7 @@ function UserGrid({ fetchedData, month }) {
           <thead>
             <tr style={{ textAlign: 'center' }}>
               <th colSpan={fetchedData[0].workingStatusList.length + 5}>
-                {month}
+                {moment(date).format('MMMM')}
               </th>
             </tr>
           </thead>

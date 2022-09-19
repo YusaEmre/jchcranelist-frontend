@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../App.css';
-import {toast,ToastContainer} from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import moment from 'moment';
 import 'react-toastify/dist/ReactToastify.css';
-function AdminGrid({ token, fetchedData, month }) {
+
+function AdminGrid({ token, fetchedData, date }) {
   const [data, setData] = useState();
   const [selectValue, setSelectValue] = useState([]);
   const options = [
@@ -19,10 +21,13 @@ function AdminGrid({ token, fetchedData, month }) {
     { id: 10, label: 'BD' },
   ];
 
-  const handleChange = (e,data,index) => {
-    let id = e.target.id
-    
-    setSelectValue([...selectValue,{id:e.target.id,value:e.target.value}])
+  const handleChange = (e, data, index) => {
+    let id = e.target.id;
+
+    setSelectValue([
+      ...selectValue,
+      { id: e.target.id, value: e.target.value },
+    ]);
     setData(data);
     let copyData = data;
     const value = e.target.value;
@@ -38,7 +43,7 @@ function AdminGrid({ token, fetchedData, month }) {
   };
   const handleEdit = async (e) => {
     e.preventDefault();
-    try{
+    try {
       const resp = await axios.put(
         `http://localhost:8080/api/vehicle/edit`,
         data,
@@ -48,23 +53,21 @@ function AdminGrid({ token, fetchedData, month }) {
           },
         }
       );
-      toast.info(`${data.vehicleModel} updated`,1)
-    }    
-    catch(error){
-      toast.error(`not updated ${error}`)
+      toast.info(`${data.vehicleModel} updated`, 1);
+    } catch (error) {
+      toast.error(`not updated ${error}`);
     }
-  
   };
-  console.log(selectValue)
-  
+  console.log(selectValue);
+
   return (
     <div>
       {fetchedData.length > 0 ? (
         <table className="table table-sm table-striped table-bordered table-responsive overflow-y: hidden">
-          <thead className='bg-light'>
+          <thead className="bg-light">
             <tr style={{ textAlign: 'center' }}>
               <th colSpan={fetchedData[0].workingStatusList.length + 5}>
-                {month}
+                {moment(date).format('MMMM')}
               </th>
             </tr>
           </thead>
@@ -82,27 +85,28 @@ function AdminGrid({ token, fetchedData, month }) {
           </thead>
           <tbody>
             {fetchedData &&
-              fetchedData.map((data,dataIndex) => (
+              fetchedData.map((data, dataIndex) => (
                 <tr key={data.id}>
                   <td>{data.fleetNo}</td>
                   <td>{data.vehicleModel}</td>
                   <td>{data.size}</td>
                   <td>{data.operator}</td>
                   {data.workingStatusList.map((status, index) => (
-                  
                     <td>
-                      <select className={status.workingStatus.statusName}
+                      <select
+                        className={status.workingStatus.statusName}
                         id={`${dataIndex} + ${index}`}
                         defaultValue={status.workingStatus.statusName}
-                        style={{ width: 30}}
-                        onChange={(e) => handleChange(e,data,index,this)}
+                        style={{ width: 30 }}
+                        onChange={(e) => handleChange(e, data, index, this)}
                       >
                         {options.map((option) => (
-                          <option className={option.label}>{option.label}</option>
+                          <option className={option.label}>
+                            {option.label}
+                          </option>
                         ))}
                       </select>
                     </td>
-                    
                   ))}
                   <td></td>
                   <td style={{ textAlign: 'center' }}>
@@ -121,12 +125,10 @@ function AdminGrid({ token, fetchedData, month }) {
       ) : (
         <></>
       )}
-              <ToastContainer position="bottom-right"
-              autoClose={3000}
-              />
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </div>
   );
-      }
+}
 export { AdminGrid };
 
 //className={selectValue.some(e => e.id === `${dataIndex} + ${index}`) ? "JO" : ""

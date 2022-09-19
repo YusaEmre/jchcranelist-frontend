@@ -3,8 +3,11 @@ import '../App.css';
 import Input from '../component/Input';
 import { useState } from 'react';
 import axios from 'axios';
-import {toast,ToastContainer} from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DatePicker from 'react-datepicker';
+import moment from 'moment/moment';
+import 'react-datepicker/dist/react-datepicker.css';
 import { authHeader, URL } from '../service/LoginService';
 
 const AddVehiclePage = () => {
@@ -12,22 +15,22 @@ const AddVehiclePage = () => {
   const [fleetNo, setFleetNo] = useState();
   const [operator, setOperator] = useState();
   const [size, setSize] = useState();
-  const [date, setDate] = useState();
+  const [creationDate, setCreationDate] = useState();
   const [message, setMessage] = useState();
 
-  const disabled = vehicleModel && fleetNo && operator && size && date;
+  const disabled = vehicleModel && fleetNo && operator && size && creationDate;
   const [token, setToken] = useState(localStorage.getItem('token'));
 
   const onClick = async (event) => {
     setMessage(undefined);
     event.preventDefault();
-
+    let monthYear = moment(creationDate).format('MM-YYYY');
     const data = {
       vehicleModel,
       fleetNo,
       operator,
       size,
-      date,
+      monthYear,
     };
     try {
       const response = await axios.post(
@@ -39,7 +42,7 @@ const AddVehiclePage = () => {
           },
         }
       );
-      toast.info(`${data.vehicleModel} added`,1)
+      toast.info(`${data.vehicleModel} added`, 1);
       setMessage('Successfully added a vehicle');
     } catch (er) {
       console.log(er.message);
@@ -75,12 +78,21 @@ const AddVehiclePage = () => {
             type="number"
             onChange={(change) => setSize(change.target.value)}
           ></Input>
-          <Input
+          <DatePicker
+            className="mt-2"
+            selected={creationDate}
+            minDate={new Date('07-01-2022')}
+            onChange={(date) => setCreationDate(date)}
+            selectsStart
+            dateFormat="MM/yyyy"
+            showMonthYearPicker
+          />
+          {/* <Input
             name="date"
             type="Date"
             label="Date"
             onChange={(change) => setDate(change.target.value)}
-          ></Input>
+          ></Input> */}
         </form>
         <div className="button-rigth-margin text-center">
           <button
@@ -93,9 +105,7 @@ const AddVehiclePage = () => {
           </button>
         </div>
       </div>
-      <ToastContainer position="bottom-right"
-              autoClose={3000}
-              />
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </div>
   );
 };
