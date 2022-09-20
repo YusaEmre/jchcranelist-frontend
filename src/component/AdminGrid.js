@@ -30,7 +30,7 @@ function AdminGrid({ token, fetchedData, date }) {
     setData(data);
     let copyData = data;
     const value = e.target.value;
-
+    console.log(fetchedData[0]);
     e.preventDefault();
     copyData.workingStatusList[index].workingStatus.statusName = value;
     options.map((option) => {
@@ -40,15 +40,15 @@ function AdminGrid({ token, fetchedData, date }) {
     });
     setData(copyData);
   };
-  const handleEdit = async (e) => {
+  const handleEdit = async (e,dataIndex) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8080/api/vehicle/edit`, data, {
+      await axios.put(`http://localhost:8080/api/vehicle/edit`, fetchedData[dataIndex], {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.info(`${data.vehicleModel} updated`, 1);
+      toast.info(`${fetchedData[dataIndex].vehicleModel} updated`, 1);
     } catch (error) {
       toast.error(`not updated ${error}`);
     }
@@ -93,6 +93,7 @@ function AdminGrid({ token, fetchedData, date }) {
               <th>Size</th>
               <th>Operator</th>
               {fetchedData[0].workingStatusList.map((status) => (
+              
                 <th>{status.day + 1}</th>
               ))}
               <th>Total Working Days</th>
@@ -127,8 +128,9 @@ function AdminGrid({ token, fetchedData, date }) {
                   <td className="text-center">{totalWorkingDays}</td>
                   <td style={{ textAlign: 'center' }}>
                     <button
-                      onClick={handleEdit}
+                      onClick={(e) => handleEdit(e, dataIndex)}
                       type="submit"
+                      id={dataIndex}
                       className="edit-button"
                     >
                       Edit

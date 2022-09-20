@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import SlideSettings from './SlideSettingsModal';
 
 function CustomGrid() {
-  const [date, setDate] = useState(new Date(2022, 6));
+  const [date, setDate] = useState(new Date(Date.now()));
   const [fetchedData, setFetchedData] = useState([]);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const fetchData = async (token) => {
