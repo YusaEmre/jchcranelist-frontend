@@ -54,9 +54,14 @@ function AdminGrid({ token, fetchedData, date }) {
     }
   };
   const handleTotalWorkingDays = () => {
+    setTotalWorkingDays(0);
+    console.log(totalWorkingDays);
     fetchedData.map((item) => {
       item.workingStatusList.map((workingStatus) => {
-        if (workingStatus.workingStatus.statusName !== '0') {
+        if (
+          workingStatus.statusName !== '0' ||
+          workingStatus.statusName !== 'BD'
+        ) {
           setTotalWorkingDays(totalWorkingDays + 1);
         }
       });
@@ -64,7 +69,7 @@ function AdminGrid({ token, fetchedData, date }) {
   };
   useEffect(() => {
     handleTotalWorkingDays();
-  }, [fetchedData]);
+  }, []);
 
   return (
     <div>

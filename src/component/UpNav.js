@@ -21,7 +21,7 @@ export const UpNav = () => {
           <ul className="navbar-nav ms-auto">
             <li>
               <Link to="/register" className="nav-link">
-                <i class="bi bi-person-plus"></i> Create User
+                <i className="bi bi-person-plus"></i> Create User
               </Link>
             </li>
             <li>
@@ -41,7 +41,7 @@ export const UpNav = () => {
                 }}
                 className="nav-link"
               >
-                <i class="bi bi-door-closed"></i> Logout
+                <i className="bi bi-door-closed"></i> Logout
               </Link>
             </li>
           </ul>
