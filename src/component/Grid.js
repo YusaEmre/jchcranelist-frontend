@@ -10,6 +10,9 @@ import SlideSettings from './SlideSettingsModal';
 function CustomGrid() {
   const [date, setDate] = useState(new Date(Date.now()));
   const [fetchedData, setFetchedData] = useState([]);
+  const [speed, setSpeed] = useState(1);
+  const [slideStart, setSlideStart] = useState(new Date('07-01-2022'));
+  const [slideEnd, setSlideEnd] = useState(new Date('06-01-2023'));
   const [token, setToken] = useState(localStorage.getItem('token'));
   const fetchData = async (token) => {
     const month = moment(date).format('MM-YYYY');
@@ -26,18 +29,25 @@ function CustomGrid() {
   const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
   const Loop = async (e) => {
-    let year = moment(date).format('YYYY');
     if (e.target.checked) {
-      for (let index = 6; index < 12; index++) {
-        if (index === 11 && e.target.checked) {
-          index = 0;
-          let newDate = moment(date).add(1, 'years');
-          year = moment(newDate).format('YYYY');
+      for (
+        let index = new Date(slideStart.getFullYear(), slideStart.getMonth());
+        index <= slideEnd;
+
+      ) {
+        if (e.target.checked) {
+          setDate(new Date(index.getFullYear(), index.getMonth()));
+        } else {
+          break;
+        }
+        if (index.getTime() === slideEnd.getTime()) {
+          index = new Date(slideStart.getFullYear(), slideStart.getMonth());
+        } else {
+          index.setMonth(index.getMonth() + 1);
         }
         if (fetchedData.length > 0) {
-          await sleep(5000);
+          await sleep(speed * 1000);
         }
-        setDate(new Date(year, index));
       }
     }
   };
@@ -65,15 +75,22 @@ function CustomGrid() {
 
             <i
               className="bi btn bi-gear-fill ms-2 p-0"
-              data-toggle="modal"
-              data-target="#exampleModal"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
             ></i>
 
-            <SlideSettings />
+            <SlideSettings
+              slideEnd={slideEnd}
+              slideStart={slideStart}
+              setSlideStart={setSlideStart}
+              setSlideEnd={setSlideEnd}
+              speed={speed}
+              setSpeed={setSpeed}
+            />
           </div>
         </div>
-        <div className="col-md-6"></div>
-        <div className="col-md-1">
+        <div className="col-md-5"></div>
+        <div className="col-md-2">
           <DatePicker
             selected={date}
             minDate={new Date('07-01-2022')}

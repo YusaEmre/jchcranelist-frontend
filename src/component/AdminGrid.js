@@ -30,7 +30,6 @@ function AdminGrid({ token, fetchedData, date }) {
     setData(data);
     let copyData = data;
     const value = e.target.value;
-    console.log(fetchedData[0]);
     e.preventDefault();
     copyData.workingStatusList[index].workingStatus.statusName = value;
     options.map((option) => {
@@ -40,36 +39,36 @@ function AdminGrid({ token, fetchedData, date }) {
     });
     setData(copyData);
   };
-  const handleEdit = async (e,dataIndex) => {
+  const handleEdit = async (e, dataIndex) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8080/api/vehicle/edit`, fetchedData[dataIndex], {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.put(
+        `http://localhost:8080/api/vehicle/edit`,
+        fetchedData[dataIndex],
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       toast.info(`${fetchedData[dataIndex].vehicleModel} updated`, 1);
     } catch (error) {
       toast.error(`not updated ${error}`);
     }
   };
-  const handleTotalWorkingDays = () => {
-    setTotalWorkingDays(0);
-    console.log(totalWorkingDays);
-    fetchedData.map((item) => {
-      item.workingStatusList.map((workingStatus) => {
-        if (
-          workingStatus.statusName !== '0' ||
-          workingStatus.statusName !== 'BD'
-        ) {
-          setTotalWorkingDays(totalWorkingDays + 1);
-        }
-      });
+  const handleTotalWorkingDays = (data) => {
+    let totalWorkingDays = 0;
+    data.map((item) => {
+      if (
+        item.workingStatus.statusName !== '0' &&
+        item.workingStatus.statusName !== 'BD' &&
+        item.workingStatus.statusName !== 'AV'
+      ) {
+        totalWorkingDays++;
+      }
     });
+    return <td className="text-center">{totalWorkingDays}</td>;
   };
-  useEffect(() => {
-    handleTotalWorkingDays();
-  }, []);
 
   return (
     <div>
@@ -93,7 +92,6 @@ function AdminGrid({ token, fetchedData, date }) {
               <th>Size</th>
               <th>Operator</th>
               {fetchedData[0].workingStatusList.map((status) => (
-              
                 <th>{status.day + 1}</th>
               ))}
               <th>Total Working Days</th>
@@ -125,7 +123,7 @@ function AdminGrid({ token, fetchedData, date }) {
                       </select>
                     </td>
                   ))}
-                  <td className="text-center">{totalWorkingDays}</td>
+                  {handleTotalWorkingDays(data.workingStatusList)}
                   <td style={{ textAlign: 'center' }}>
                     <button
                       onClick={(e) => handleEdit(e, dataIndex)}
