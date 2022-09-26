@@ -1,6 +1,5 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
-import { Navbar } from './component/Navbar';
 import { HomePage } from './Pages/HomePage';
 import { UpNav } from './component/UpNav';
 import Login from './Pages/Logins';
@@ -12,7 +11,6 @@ const App = () => {
   return (
     <div>
       <UpNav />
-      <Navbar />
       <Routes>
         <Route exact path="/" element={<HomePage />} />
 

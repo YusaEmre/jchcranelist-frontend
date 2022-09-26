@@ -34,31 +34,26 @@ function CustomGrid() {
         let index = new Date(slideStart.getFullYear(), slideStart.getMonth());
         index <= slideEnd;
 
-      ) 
-      {
+      ) {
         if (e.target.checked) {
-  
           setDate(new Date(index.getFullYear(), index.getMonth()));
         } else {
-        
           break;
         }
         if (index.getTime() === slideEnd.getTime()) {
-        
           index = new Date(slideStart.getFullYear(), slideStart.getMonth());
         } else {
           index.setMonth(index.getMonth() + 1);
         }
 
-          await sleep(speed * 1000);
+        await sleep(speed * 1000);
       }
     }
   };
 
   return (
-    <div className="">
-      <h3 className="p-3 text-center">List of Vehicles</h3>
-      <div className="d-flex row-reverse mb-2">
+    <div className="mt-4 ms-4 me-4">
+      <div className="d-flex row-reverse mb-2 justify-content-center">
         <div className="col-md-5 col-5">
           {' '}
           <div className="form-check form-switch">
@@ -104,8 +99,6 @@ function CustomGrid() {
           />
         </div>
       </div>
-
-      {/* <DropDown month={month} setMonth={setMonth} /> */}
       {!token ? (
         <UserGrid date={date} fetchedData={fetchedData} />
       ) : (
