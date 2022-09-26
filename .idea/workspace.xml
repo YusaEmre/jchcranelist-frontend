@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d97c14b-bff3-4fd4-8678-77801e4bde07" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pages/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/AdminGrid.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/AdminGrid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Grid.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Grid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/UserGrid.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/UserGrid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +40,7 @@
       <updated>1663078149639</updated>
       <workItem from="1663078153580" duration="6000" />
       <workItem from="1663175731515" duration="19000" />
+      <workItem from="1664191581796" duration="19000" />
     </task>
     <servers />
   </component>

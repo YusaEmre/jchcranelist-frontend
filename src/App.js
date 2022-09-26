@@ -10,7 +10,7 @@ import { useState } from 'react';
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token'));
   return (
-    <div className="">
+    <div>
       <UpNav />
       <Navbar />
       <Routes>

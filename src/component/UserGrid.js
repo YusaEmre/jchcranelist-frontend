@@ -1,5 +1,6 @@
 import moment from 'moment';
 import React from 'react';
+import "../App.css"
 
 function UserGrid({ fetchedData, date }) {
   const handleTotalWorkingDays = (data) => {
@@ -51,7 +52,7 @@ function UserGrid({ fetchedData, date }) {
                   <td>{data.size}</td>
                   <td>{data.operator}</td>
                   {data.workingStatusList.map((status) => (
-                    <td>{status.workingStatus.statusName}</td>
+                    <td ><div className={status.workingStatus.statusName}>{status.workingStatus.statusName}</div></td>
                   ))}
                   {handleTotalWorkingDays(data.workingStatusList)}
                 </tr>

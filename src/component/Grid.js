@@ -34,26 +34,29 @@ function CustomGrid() {
         let index = new Date(slideStart.getFullYear(), slideStart.getMonth());
         index <= slideEnd;
 
-      ) {
+      ) 
+      {
         if (e.target.checked) {
+  
           setDate(new Date(index.getFullYear(), index.getMonth()));
         } else {
+        
           break;
         }
         if (index.getTime() === slideEnd.getTime()) {
+        
           index = new Date(slideStart.getFullYear(), slideStart.getMonth());
         } else {
           index.setMonth(index.getMonth() + 1);
         }
-        if (fetchedData.length > 0) {
+
           await sleep(speed * 1000);
-        }
       }
     }
   };
 
   return (
-    <div className="container">
+    <div className="">
       <h3 className="p-3 text-center">List of Vehicles</h3>
       <div className="d-flex row-reverse mb-2">
         <div className="col-md-5 col-5">
