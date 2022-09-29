@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Input from '../component/Input';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-import '../App.css';
+import Input from '../component/Input';
 import 'react-toastify/dist/ReactToastify.css';
+
 const Register = () => {
   const [name, setName] = useState();
   const [surname, setSurname] = useState();
@@ -11,11 +11,11 @@ const Register = () => {
   const [phoneNumber, setPhoneNumber] = useState();
   const [password, setPassword] = useState();
 
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const token = localStorage.getItem('token');
 
   const handleRegister = async () => {
     try {
-      const resp = await axios.post(
+      await axios.post(
         'http://localhost:8080/api/user/register',
         {
           name: name,
@@ -39,9 +39,11 @@ const Register = () => {
 
   const disabled = name && surname && email && phoneNumber && password;
   return (
-    <div className="container w-50  d-flex justify-content-center text-center">
+    <div className="container mt-5 w-50  d-flex justify-content-center text-center">
       <div>
-        <h4 className="text-center">New User</h4>
+        <h4 className="text-center" style={{ color: 'rgb(22 41 227)' }}>
+          New User
+        </h4>
         <form>
           <Input
             name="name"
@@ -71,7 +73,7 @@ const Register = () => {
           ></Input>
           <button
             type="submit"
-            className="button-background mt-4"
+            className="btn btn-primary mt-4"
             disabled={!disabled}
             onClick={handleRegister}
           >

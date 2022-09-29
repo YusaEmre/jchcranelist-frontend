@@ -1,14 +1,12 @@
 import React from 'react';
-import '../App.css';
 import Input from '../component/Input';
 import { useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import DatePicker from 'react-datepicker';
 import moment from 'moment/moment';
 import 'react-datepicker/dist/react-datepicker.css';
-import { authHeader, URL } from '../service/LoginService';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddVehiclePage = () => {
   const [vehicleModel, setVehicleModel] = useState();
@@ -19,7 +17,7 @@ const AddVehiclePage = () => {
   const [message, setMessage] = useState();
 
   const disabled = vehicleModel && fleetNo && operator && size && creationDate;
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const token = localStorage.getItem('token');
 
   const onClick = async (event) => {
     setMessage(undefined);
@@ -33,15 +31,11 @@ const AddVehiclePage = () => {
       monthYear,
     };
     try {
-      const response = await axios.post(
-        'http://localhost:8080/api/vehicle/save',
-        data,
-        {
-          headers: {
-            Authorization: 'Bearer ' + token,
-          },
-        }
-      );
+      await axios.post('http://localhost:8080/api/vehicle/save', data, {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      });
       toast.info(`${data.vehicleModel} added`, 1);
       setMessage('Successfully added a vehicle');
     } catch (er) {
@@ -50,9 +44,11 @@ const AddVehiclePage = () => {
     }
   };
   return (
-    <div className="container w-50 d-flex justify-content-center">
+    <div className="container mt-5 w-50 d-flex justify-content-center">
       <div className="vehicle-page">
-        <h4 className="text-center">New Vehicle</h4>
+        <h4 className="text-center" style={{ color: 'rgb(22 41 227)' }}>
+          New Vehicle
+        </h4>
         <p className="text-center">{message}</p>
         <form>
           <Input
@@ -72,7 +68,7 @@ const AddVehiclePage = () => {
           ></Input>
           <Input
             name="size"
-            minnum="0"
+            min={0}
             label="Size"
             type="number"
             onChange={(change) => setSize(change.target.value)}
@@ -87,18 +83,12 @@ const AddVehiclePage = () => {
             dateFormat="MM/yyyy"
             showMonthYearPicker
           />
-          {/* <Input
-            name="date"
-            type="Date"
-            label="Date"
-            onChange={(change) => setDate(change.target.value)}
-          ></Input> */}
         </form>
-        <div className="button-rigth-margin text-center">
+        <div className="text-center">
           <button
             type="submit"
             onClick={onClick}
-            className="button-background mt-4"
+            className="btn btn-primary mt-4"
             disabled={!disabled}
           >
             Create a vehicle

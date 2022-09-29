@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Input from '../component/Input';
-import '../App.css';
 import axios from 'axios';
-import {toast,ToastContainer} from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import Input from '../component/Input';
 import 'react-toastify/dist/ReactToastify.css';
 const Login = (props) => {
   const [username, setUsername] = useState();
@@ -23,8 +22,8 @@ const Login = (props) => {
       navigate('/');
       window.location.reload();
     } catch (error) {
-      if(error.response.data.status == 401){
-        toast.error("failed login, Unauthorized")
+      if (error.response.data.status == 401) {
+        toast.error('failed login, Unauthorized');
       }
       setServerError(error);
     }
@@ -32,7 +31,7 @@ const Login = (props) => {
 
   const disabled = username && password;
   return (
-    <div className="container text-center">
+    <div className="container text-center mt-5 w-50 d-flex justify-content-center">
       <form>
         <Input
           name="username"
@@ -53,16 +52,14 @@ const Login = (props) => {
           <button
             onClick={handleLogin}
             type="submit"
-            className="button-background mt-4"
+            className="btn btn-primary mt-4"
             disabled={!disabled}
           >
             Sign In
           </button>
         </div>
       </form>
-      <ToastContainer position='bottom-right'
-          autoClose={3000}
-      />
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </div>
   );
 };

@@ -1,26 +1,25 @@
 .App {
   text-align: center;
 }
-.back {
+.navbar-background {
   background-color: #7577cd;
 }
-.back ul li :link {
+ul li :link {
   color: white;
 }
-.button-background {
-  background-color: #ec6e00;
-  color: white;
-  padding: 0.3rem 1.5rem;
-  border: none;
+.navbar-logo {
+  width: 9vw;
+  height: 4vh;
 }
-.button-background:hover {
-  background-color: #f74a00;
+.btn-primary,
+.btn-primary:active,
+.btn-primary:visited {
+  background-color: #ec6e00 !important;
+  border-color: #f47607 !important;
+  color: white !important;
 }
-
-.edit-button {
-  background-color: #ec6e00;
-  color: white;
-  border: none;
+.btn-primary:hover {
+  background-color: #f47607 !important;
 }
 
 td select {
@@ -31,9 +30,6 @@ td select {
   font-size: 18px;
 }
 .table {
-  display: block;
-  overflow-x: auto;
-  white-space: nowrap;
   opacity: 1;
   animation: fadeIn 2s;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
@@ -49,37 +45,46 @@ td select {
 }
 
 .AV {
-  background-color: wheat;
+  background-color: rgb(194, 116, 230) !important;
+  color: white !important;
 }
 .JO {
-  background-color: orange;
+  background-color: rgb(243, 163, 15) !important;
+  color: white !important;
 }
 .P50 {
-  background-color: lightblue;
+  background-color: lightblue !important;
+  color: white !important;
 }
 .P75 {
-  background-color: lightseagreen;
+  background-color: lightseagreen !important;
+  color: white !important;
 }
 
 .P90 {
-  background-color: blue;
-  color: white;
+  background-color: rgb(70, 70, 215) !important;
+  color: white !important;
 }
 .color {
-  background-color: beige;
+  background-color: beige !important;
+  color: white !important;
 }
 
 .QT {
-  background-color: lightpink;
+  background-color: lightpink !important;
+  color: white !important;
 }
 .LT {
-  background-color: lightgreen;
+  background-color: rgb(118, 211, 118) !important;
+  color: white !important;
 }
 .SE {
-  background-color: yellow;
+  background-color: rgb(253, 255, 162) !important;
+  color: white !important;
 }
 .BD {
-  background-color: red;
+  background-color: rgb(237, 51, 51) !important;
+  color: white !important;
 }
 
 .navbar-nav li :hover {
@@ -94,6 +99,34 @@ td select {
   font-weight: 400;
   line-height: 1.5;
   color: #212529;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  appearance: none;
+}
+@media only screen and (max-device-width: 480px) {
+  .navbar-logo {
+    width: 6rem;
+  }
+}
+
+.row-actions {
+  display: none !important;
+}
+tbody tr:hover .row-actions {
+  display: flex !important;
+  animation: fadeIn 0.2s;
+}
+tbody tr:hover {
+  background-color: #dffcf6;
+}
+tbody tr i:hover {
+  color: #1ac9f0;
+}
+.table select {
+  line-height: 1.5;
+  color: #414141;
   background-color: #fff;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;

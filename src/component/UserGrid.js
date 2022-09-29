@@ -4,6 +4,7 @@ import React from 'react';
 function UserGrid({ fetchedData, date }) {
   const handleTotalWorkingDays = (data) => {
     let totalWorkingDays = 0;
+    // eslint-disable-next-line array-callback-return
     data.map((item) => {
       if (
         item.workingStatus.statusName !== '0' &&
