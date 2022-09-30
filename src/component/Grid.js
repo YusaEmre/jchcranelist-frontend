@@ -15,6 +15,7 @@ function CustomGrid() {
   const [speed, setSpeed] = useState(10);
   const [slideStart, setSlideStart] = useState(new Date('07-01-2022'));
   const [slideEnd, setSlideEnd] = useState(new Date('06-01-2023'));
+  const [options, setOptions] = useState([]);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const handle = useFullScreenHandle();
   const fetchData = async (token) => {
@@ -24,26 +25,23 @@ function CustomGrid() {
     );
     setFetchedData(resp.data);
   };
+  const fetchOptions = async () => {
+    const resp = await axios.get(`http://localhost:8080/api/workingstatus`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setOptions(resp.data);
+    console.log(resp);
+  };
 
   useEffect(() => {
     setToken(localStorage.getItem('token'));
     fetchData(token);
+    fetchOptions();
   }, [date]);
 
   const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
-
-  const options = [
-    { id: 1, label: '0', color: '#A1231A' },
-    { id: 2, label: 'JO', color: '#A1231A' },
-    { id: 3, label: 'AV', color: '#A1231A' },
-    { id: 4, label: 'P90', color: '#A1231A' },
-    { id: 5, label: 'LT', color: '#A1231A' },
-    { id: 6, label: 'QT', color: '#A1231A' },
-    { id: 7, label: 'P50', color: '#A1231A' },
-    { id: 8, label: 'P75', color: '#A1231A' },
-    { id: 9, label: 'SE', color: '#A1231A' },
-    { id: 10, label: 'BD', color: '#A1231A' },
-  ];
 
   const Loop = async (e) => {
     if (e.target.checked) {
@@ -103,7 +101,7 @@ function CustomGrid() {
               data-bs-toggle="modal"
               data-bs-target="#createModal"
             >
-              Vehicle Status <i className="bi bi-gear-fill ms-2 p-0 mb-1"></i>
+              Working Status <i className="bi bi-gear-fill ms-2 p-0 mb-1"></i>
             </button>
 
             <CreateOption options={options} />
@@ -138,6 +136,7 @@ function CustomGrid() {
             token={token}
             date={date}
             fetchedData={fetchedData}
+            workingStatus={options}
           />
         )}
       </FullScreen>

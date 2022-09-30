@@ -5,23 +5,11 @@ import { toast, ToastContainer } from 'react-toastify';
 import moment from 'moment';
 import 'react-toastify/dist/ReactToastify.css';
 
-function AdminGrid({ token, fetchedData, date }) {
+function AdminGrid({ token, fetchedData, date, workingStatus }) {
   const [data, setData] = useState();
   const [selectValue, setSelectValue] = useState([]);
   const [totalWorkingDays, setTotalWorkingDays] = useState(0);
-  const options = [
-    { id: 1, label: '0' },
-    { id: 2, label: 'JO' },
-    { id: 3, label: 'AV' },
-    { id: 4, label: 'P90' },
-    { id: 5, label: 'LT' },
-    { id: 6, label: 'QT' },
-    { id: 7, label: 'P50' },
-    { id: 8, label: 'P75' },
-    { id: 9, label: 'SE' },
-    { id: 10, label: 'BD' },
-  ];
-
+  console.log(workingStatus);
   const handleChange = (e, data, index) => {
     setSelectValue([
       ...selectValue,
@@ -32,7 +20,7 @@ function AdminGrid({ token, fetchedData, date }) {
     const value = e.target.value;
     e.preventDefault();
     copyData.workingStatusList[index].workingStatus.statusName = value;
-    options.map((option) => {
+    workingStatus.map((option) => {
       if (option.label === value) {
         copyData.workingStatusList[index].workingStatus.id = option.id;
       }
@@ -99,6 +87,7 @@ function AdminGrid({ token, fetchedData, date }) {
           </thead>
           <tbody>
             {fetchedData &&
+              workingStatus &&
               fetchedData.map((data, dataIndex) => (
                 <tr key={data.id}>
                   <td>{data.fleetNo}</td>
@@ -115,9 +104,9 @@ function AdminGrid({ token, fetchedData, date }) {
                         style={{ width: 30 }}
                         onChange={(e) => handleChange(e, data, index, this)}
                       >
-                        {options.map((option) => (
-                          <option className={option.label}>
-                            {option.label}
+                        {workingStatus.map((option) => (
+                          <option className={option.statusName}>
+                            {option.statusName}
                           </option>
                         ))}
                       </select>

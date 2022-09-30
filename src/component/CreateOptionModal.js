@@ -4,23 +4,22 @@ const CreateOption = ({ options }) => {
   const [optionsAr, setOptionsAr] = useState(options);
   const [optionColor, setOptionColor] = useState('#9E9FE0');
   const [optionLabel, setOptionLabel] = useState();
-
   const handleAddOption = () => {
     const option = { label: optionLabel, color: optionColor };
     setOptionsAr([...optionsAr, option]);
   };
 
   const renderOptions = () => {
-    return optionsAr.map((option) => {
-      return (
-        <div className="row mb-2">
+    return options.map((option) => {
+      return option ? (
+        <div key={option.id} className="row mb-2">
           <div className="col-3">
             {' '}
             <input
               class="form-control "
               type="text"
               placeholder="Option"
-              defaultValue={option.label}
+              defaultValue={option.statusName}
               aria-label="default input example"
             />
           </div>
@@ -37,6 +36,8 @@ const CreateOption = ({ options }) => {
             <i className="btn bi bi-trash"></i>
           </div>
         </div>
+      ) : (
+        <></>
       );
     });
   };
