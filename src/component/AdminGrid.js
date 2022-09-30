@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import moment from 'moment';
-
+import '../App.css';
 import { toast, ToastContainer } from 'react-toastify';
+import moment from 'moment';
 import 'react-toastify/dist/ReactToastify.css';
 
-function AdminGrid({ token, fetchedData, date, options }) {
+function AdminGrid({ token, fetchedData, date }) {
   const [data, setData] = useState();
   const [selectValue, setSelectValue] = useState([]);
+  const [totalWorkingDays, setTotalWorkingDays] = useState(0);
+  const options = [
+    { id: 1, label: '0' },
+    { id: 2, label: 'JO' },
+    { id: 3, label: 'AV' },
+    { id: 4, label: 'P90' },
+    { id: 5, label: 'LT' },
+    { id: 6, label: 'QT' },
+    { id: 7, label: 'P50' },
+    { id: 8, label: 'P75' },
+    { id: 9, label: 'SE' },
+    { id: 10, label: 'BD' },
+  ];
 
   const handleChange = (e, data, index) => {
     setSelectValue([
@@ -81,7 +94,7 @@ function AdminGrid({ token, fetchedData, date, options }) {
               {fetchedData[0].workingStatusList.map((status) => (
                 <th>{status.day + 1}</th>
               ))}
-              <th>Total Working Days</th>
+              <th>Working Days</th>
             </tr>
           </thead>
           <tbody>
