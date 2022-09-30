@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import moment from 'moment';
-
+import '../App.css';
 import { toast, ToastContainer } from 'react-toastify';
+import moment from 'moment';
 import 'react-toastify/dist/ReactToastify.css';
 
-function AdminGrid({ token, fetchedData, date, options }) {
+function AdminGrid({ token, fetchedData, date }) {
   const [data, setData] = useState();
   const [selectValue, setSelectValue] = useState([]);
+  const [totalWorkingDays, setTotalWorkingDays] = useState(0);
+  const options = [
+    { id: 1, label: '0' },
+    { id: 2, label: 'JO' },
+    { id: 3, label: 'AV' },
+    { id: 4, label: 'P90' },
+    { id: 5, label: 'LT' },
+    { id: 6, label: 'QT' },
+    { id: 7, label: 'P50' },
+    { id: 8, label: 'P75' },
+    { id: 9, label: 'SE' },
+    { id: 10, label: 'BD' },
+  ];
 
   const handleChange = (e, data, index) => {
     setSelectValue([
@@ -60,12 +73,12 @@ function AdminGrid({ token, fetchedData, date, options }) {
   return (
     <div>
       {fetchedData.length > 0 ? (
-        <table className="table table-bordered table-striped">
+        <table className="table table-sm table-striped table-bordered table-responsive overflow-y: hidden">
           <thead className="bg-light">
             <tr>
               <th
                 className="text-center "
-                colSpan={100}
+                colSpan={fetchedData[0].workingStatusList.length}
                 style={{ color: '#ec6e00' }}
               >
                 <h5>{moment(date).format('MMMM')}</h5>
@@ -93,10 +106,10 @@ function AdminGrid({ token, fetchedData, date, options }) {
                   <td>{data.size}</td>
                   <td>{data.operator}</td>
                   {data.workingStatusList.map((status, index) => (
-                    <td className="pt-2 p-0">
+                    <td>
                       <select
                         key={index}
-                        className={`${status.workingStatus.statusName} w-100 text-center`}
+                        className={status.workingStatus.statusName}
                         id={`${dataIndex} + ${index}`}
                         defaultValue={status.workingStatus.statusName}
                         style={{ width: 30 }}
@@ -111,33 +124,16 @@ function AdminGrid({ token, fetchedData, date, options }) {
                     </td>
                   ))}
                   {handleTotalWorkingDays(data.workingStatusList)}
-
-                  <div className="row row-actions p-0 m-0">
-                    <div className="col-md-6 p-0 m-0">
-                      {' '}
-                      <button
-                        onClick={(e) => handleEdit(e, dataIndex)}
-                        type="submit"
-                        id={dataIndex}
-                        className="btn"
-                        title="Edit Confirm Button"
-                      >
-                        <i class="bi bi-pencil-square"></i>
-                      </button>
-                    </div>
-                    <div className="col-md-6 p-0 m-0">
-                      {' '}
-                      <button
-                        onClick={(e) => handleEdit(e, dataIndex)}
-                        type="submit"
-                        id={dataIndex}
-                        className="btn text-danger"
-                        title="Delete Button"
-                      >
-                        <i class="bi bi-trash"></i>{' '}
-                      </button>
-                    </div>
-                  </div>
+                  <td style={{ textAlign: 'center' }}>
+                    <button
+                      onClick={(e) => handleEdit(e, dataIndex)}
+                      type="submit"
+                      id={dataIndex}
+                      className="edit-button"
+                    >
+                      Edit
+                    </button>
+                  </td>
                 </tr>
               ))}
           </tbody>
@@ -157,3 +153,5 @@ function AdminGrid({ token, fetchedData, date, options }) {
   );
 }
 export { AdminGrid };
+
+//className={selectValue.some(e => e.id === `${dataIndex} + ${index}`) ? "JO" : ""
