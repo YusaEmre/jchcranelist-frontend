@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import moment from 'moment/moment';
+import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { UserGrid } from './UserGrid';
 import { AdminGrid } from './AdminGrid';
 import SlideSettings from './SlideSettingsModal';
@@ -15,6 +16,7 @@ function CustomGrid() {
   const [slideStart, setSlideStart] = useState(new Date('07-01-2022'));
   const [slideEnd, setSlideEnd] = useState(new Date('06-01-2023'));
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const handle = useFullScreenHandle();
   const fetchData = async (token) => {
     const month = moment(date).format('MM-YYYY');
     const resp = await axios.get(
@@ -69,11 +71,7 @@ function CustomGrid() {
   return (
     <div className="mt-4">
       <div className="d-flex row-reverse mb-2 justify-content-center">
-        <div className="col-md-1 col-1">
-          <i className="bi bi-fullscreen"></i>
-        </div>
         <div className="col-md-4 col-4 ">
-          {' '}
           <div className="form-check form-switch">
             <label
               className="form-check-label mt-1"
@@ -93,14 +91,21 @@ function CustomGrid() {
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
             ></i>
+            <i
+              className="bi bi-fullscreen ms-2 btn m-0 p-0 mb-1"
+              title="Open Full Screen"
+              onClick={handle.enter}
+            ></i>
+
             <div class="vr ms-2"></div>
             <button
               className="btn"
               data-bs-toggle="modal"
               data-bs-target="#createModal"
             >
-              Vehicle Status <i className="bi bi-gear-fill"></i>
+              Vehicle Status <i className="bi bi-gear-fill ms-2 p-0 mb-1"></i>
             </button>
+
             <CreateOption options={options} />
             <SlideSettings
               slideEnd={slideEnd}
@@ -124,16 +129,18 @@ function CustomGrid() {
           />
         </div>
       </div>
-      {!token ? (
-        <UserGrid date={date} fetchedData={fetchedData} />
-      ) : (
-        <AdminGrid
-          options={options}
-          token={token}
-          date={date}
-          fetchedData={fetchedData}
-        />
-      )}
+      <FullScreen handle={handle} className="bg-white">
+        {!token ? (
+          <UserGrid date={date} fetchedData={fetchedData} />
+        ) : (
+          <AdminGrid
+            options={options}
+            token={token}
+            date={date}
+            fetchedData={fetchedData}
+          />
+        )}
+      </FullScreen>
     </div>
   );
 }
