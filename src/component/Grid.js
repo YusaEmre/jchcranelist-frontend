@@ -69,7 +69,10 @@ function CustomGrid() {
   return (
     <div className="mt-4">
       <div className="d-flex row-reverse mb-2 justify-content-center">
-        <div className="col-md-5 col-5 ms-4">
+        <div className="col-md-1 col-1">
+          <i className="bi bi-fullscreen"></i>
+        </div>
+        <div className="col-md-4 col-4 ">
           {' '}
           <div className="form-check form-switch">
             <label
