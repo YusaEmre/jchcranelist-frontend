@@ -59,7 +59,7 @@ function AdminGrid({ token, fetchedData, date, workingStatus }) {
   };
 
   return (
-    <div>
+    <div className="mt-2">
       {fetchedData.length > 0 ? (
         <table className="table table-bordered table-striped">
           <thead className="bg-light">
