@@ -40,7 +40,7 @@ function UserGrid({ fetchedData, date }) {
               {fetchedData[0].workingStatusList.map((status) => (
                 <th>{status.day + 1}</th>
               ))}
-              <th>Total Working Days</th>
+              <th>Working Days</th>
             </tr>
           </thead>
           <tbody>
@@ -52,8 +52,8 @@ function UserGrid({ fetchedData, date }) {
                   <td>{data.size}</td>
                   <td>{data.operator}</td>
                   {data.workingStatusList.map((status) => (
-                    <td>
-                      <div style={{backgroundColor:status.workingStatus.color}}>
+                    <td style={{backgroundColor:status.workingStatus.color}}>
+                      <div >
                         {status.workingStatus.statusName}
                       </div>
                     </td>

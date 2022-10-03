@@ -39,7 +39,8 @@ const AddVehiclePage = () => {
       toast.info(`${data.vehicleModel} added`, 1);
       setMessage('Successfully added a vehicle');
     } catch (er) {
-      console.log(er.message);
+      toast.error(er.response.data.message, 1);
+      console.log(er.response.data.message);
       setMessage('Unauthorized');
     }
   };

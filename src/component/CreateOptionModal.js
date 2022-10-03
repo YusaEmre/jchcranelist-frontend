@@ -7,7 +7,11 @@ const CreateOption = ({ options,token }) => {
   const [optionsAr, setOptionsAr] = useState(options);
   const [optionColor, setOptionColor] = useState('#9E9FE0');
   const [optionLabel, setOptionLabel] = useState();
+  const [deletedStatuses, setDeletedStatuses] =useState([]);
   useEffect(() => { setOptionsAr(options)}, [options] )
+
+
+
   const handleAddOption = async (e) => {
     e.preventDefault();
     const option = { statusName: optionLabel, color: optionColor };
@@ -16,8 +20,12 @@ const CreateOption = ({ options,token }) => {
 
   const handleSaveAllStatuses = async (e) =>{
     e.preventDefault();
+    const data = {
+      workingStatusList:optionsAr,
+      deletedWorkingStatusList:deletedStatuses
+    };
     try {
-      await axios.post('http://localhost:8080/api/workingstatus/saveAll', optionsAr, {
+      await axios.post('http://localhost:8080/api/workingstatus/saveAll', data, {
         headers: {
           Authorization: 'Bearer ' + token,
         },
@@ -25,17 +33,21 @@ const CreateOption = ({ options,token }) => {
       toast.info(`Changes are saved`, 1);
    
     } catch (er) {
-      console.log(er.message);
-      toast.error(er.message, 1);
+      toast.error(er.response.data.message, 1);
     }
   };
 
-  const handleDelete = (e) =>{
-    
+  const handleDelete = (e,index) =>{
+    e.preventDefault();
+    setOptionsAr(optionsAr => {
+      const status = optionsAr[index];
+      setDeletedStatuses([...deletedStatuses, status]);
+      return optionsAr.filter((value, i) => i !== index);
+    })
   }
 
   const renderOptions = () => {
-    return optionsAr.map((option) => {
+    return optionsAr.map((option,index) => {
       return option ? (
         <div key={option.id} className="row mb-2">
           <div className="col-3">
@@ -58,7 +70,7 @@ const CreateOption = ({ options,token }) => {
             />
           </div>
           <div className="col-2"
-            onClick={(e) => handleDelete(e)}
+            onClick={(e) => handleDelete(e,index)}
           >
             <i className="btn bi bi-trash"></i>
           </div>
