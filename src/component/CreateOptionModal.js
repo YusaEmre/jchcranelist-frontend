@@ -1,16 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from 'react-toastify';
+import axios from 'axios';
 
-const CreateOption = ({ options }) => {
+const CreateOption = ({ options,token }) => {
   const [optionsAr, setOptionsAr] = useState(options);
   const [optionColor, setOptionColor] = useState('#9E9FE0');
   const [optionLabel, setOptionLabel] = useState();
-  const handleAddOption = () => {
-    const option = { label: optionLabel, color: optionColor };
+  useEffect(() => { setOptionsAr(options)}, [options] )
+  const handleAddOption = async (e) => {
+    e.preventDefault();
+    const option = { statusName: optionLabel, color: optionColor };
     setOptionsAr([...optionsAr, option]);
   };
 
+  const handleSaveAllStatuses = async (e) =>{
+    e.preventDefault();
+    try {
+      await axios.post('http://localhost:8080/api/workingstatus/saveAll', optionsAr, {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      });
+      toast.info(`Changes are saved`, 1);
+   
+    } catch (er) {
+      console.log(er.message);
+      toast.error(er.message, 1);
+    }
+  };
+
+  const handleDelete = (e) =>{
+    
+  }
+
   const renderOptions = () => {
-    return options.map((option) => {
+    return optionsAr.map((option) => {
       return option ? (
         <div key={option.id} className="row mb-2">
           <div className="col-3">
@@ -32,7 +57,9 @@ const CreateOption = ({ options }) => {
               title="Choose option color"
             />
           </div>
-          <div className="col-2">
+          <div className="col-2"
+            onClick={(e) => handleDelete(e)}
+          >
             <i className="btn bi bi-trash"></i>
           </div>
         </div>
@@ -92,7 +119,7 @@ const CreateOption = ({ options }) => {
                 </div>
                 <div className="col-1">
                   <i
-                    onClick={handleAddOption}
+                    onClick={(e) => handleAddOption(e)}
                     className="bi bi-plus-square btn m-0 p-0"
                     style={{ fontSize: '1.5rem' }}
                   ></i>
@@ -109,6 +136,7 @@ const CreateOption = ({ options }) => {
               Close
             </button>
             <button
+              onClick={(e) => handleSaveAllStatuses(e)}
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
@@ -118,6 +146,7 @@ const CreateOption = ({ options }) => {
           </div>
         </div>
       </div>
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </div>
   );
 };

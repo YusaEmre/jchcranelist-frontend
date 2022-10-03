@@ -53,7 +53,7 @@ function UserGrid({ fetchedData, date }) {
                   <td>{data.operator}</td>
                   {data.workingStatusList.map((status) => (
                     <td>
-                      <div className={status.workingStatus.statusName}>
+                      <div style={{backgroundColor:status.workingStatus.color}}>
                         {status.workingStatus.statusName}
                       </div>
                     </td>

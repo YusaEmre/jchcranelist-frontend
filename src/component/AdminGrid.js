@@ -6,10 +6,17 @@ import moment from 'moment';
 import 'react-toastify/dist/ReactToastify.css';
 
 function AdminGrid({ token, fetchedData, date, workingStatus }) {
+  const [listData,setListData] = useState(fetchedData);
   const [data, setData] = useState();
   const [selectValue, setSelectValue] = useState([]);
   const [totalWorkingDays, setTotalWorkingDays] = useState(0);
-  console.log(workingStatus);
+  useEffect(() => { setListData(fetchedData)}, [fetchedData])
+
+
+  const remove_from_list = (id) => {     
+    setListData(listData.filter(item=> item.id != id)); 
+  }
+
   const handleChange = (e, data, index) => {
     setSelectValue([
       ...selectValue,
@@ -19,10 +26,11 @@ function AdminGrid({ token, fetchedData, date, workingStatus }) {
     let copyData = data;
     const value = e.target.value;
     e.preventDefault();
-    copyData.workingStatusList[index].workingStatus.statusName = value;
+    copyData.workingStatusList[index].workingStatus.statusName = value; 
     workingStatus.map((option) => {
-      if (option.label === value) {
+      if (option.statusName === value) {
         copyData.workingStatusList[index].workingStatus.id = option.id;
+        copyData.workingStatusList[index].workingStatus.color = option.color; 
       }
     });
     setData(copyData);
@@ -32,19 +40,39 @@ function AdminGrid({ token, fetchedData, date, workingStatus }) {
     try {
       await axios.put(
         `http://localhost:8080/api/vehicle/edit`,
-        fetchedData[dataIndex],
+        listData[dataIndex],
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      toast.info(`${fetchedData[dataIndex].vehicleModel} updated`, 1);
+      toast.info(`${listData[dataIndex].vehicleModel} updated`, 1);
     } catch (error) {
       toast.error(`not updated ${error}`);
     }
   };
+  const handleDelete = async (e, dataIndex) => {
+    e.preventDefault();
+    try {
+      await axios.delete(
+        `http://localhost:8080/api/vehicle/delete/id/`+listData[dataIndex].id,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.info(`${listData[dataIndex].vehicleModel} deleted`, 1);
+      console.log(listData[dataIndex].id);
+      remove_from_list(listData[dataIndex].id);
+    
+    } catch (error) {
+      toast.error(`Vehicle delete failed  ${error}`);
+    }
+  };
   const handleTotalWorkingDays = (data) => {
+  
     let totalWorkingDays = 0;
     data.map((item) => {
       if (
@@ -59,6 +87,7 @@ function AdminGrid({ token, fetchedData, date, workingStatus }) {
   };
 
   return (
+   
     <div className="mt-2">
       {fetchedData.length > 0 ? (
         <table className="table table-bordered table-striped">
@@ -86,9 +115,9 @@ function AdminGrid({ token, fetchedData, date, workingStatus }) {
             </tr>
           </thead>
           <tbody>
-            {fetchedData &&
+            {listData &&
               workingStatus &&
-              fetchedData.map((data, dataIndex) => (
+              listData.map((data, dataIndex) => (
                 <tr key={data.id}>
                   <td>{data.fleetNo}</td>
                   <td>{data.vehicleModel}</td>
@@ -98,14 +127,15 @@ function AdminGrid({ token, fetchedData, date, workingStatus }) {
                     <td className="pt-2 p-0">
                       <select
                         key={index}
-                        className={`${status.workingStatus.statusName} w-100 text-center`}
+                        className={`w-100 text-center`}
                         id={`${dataIndex} + ${index}`}
                         defaultValue={status.workingStatus.statusName}
-                        style={{ width: 30 }}
-                        onChange={(e) => handleChange(e, data, index, this)}
+                        style={{ width: 30 ,backgroundColor:status.workingStatus.color}}
+                        onChange={(e) => handleChange(e, data, index)}
                       >
                         {workingStatus.map((option) => (
-                          <option className={option.statusName}>
+                          
+                          <option style={{backgroundColor:option.color}}>
                             {option.statusName}
                           </option>
                         ))}
@@ -130,7 +160,7 @@ function AdminGrid({ token, fetchedData, date, workingStatus }) {
                     <div className="col-md-6 p-0 m-0">
                       {' '}
                       <button
-                        onClick={(e) => handleEdit(e, dataIndex)}
+                        onClick={(e) => handleDelete(e, dataIndex)}
                         type="submit"
                         id={dataIndex}
                         className="btn text-danger"
@@ -158,4 +188,8 @@ function AdminGrid({ token, fetchedData, date, workingStatus }) {
     </div>
   );
 }
+
+
+
+
 export { AdminGrid };

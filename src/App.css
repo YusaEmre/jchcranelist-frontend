@@ -44,49 +44,6 @@ td select {
   }
 }
 
-.AV {
-  background-color: rgb(194, 116, 230) !important;
-  color: white !important;
-}
-.JO {
-  background-color: #f3a30f !important;
-  color: white !important;
-}
-.P50 {
-  background-color: #add8e6 !important;
-  color: white !important;
-}
-.P75 {
-  background-color: #20b2aa !important;
-  color: white !important;
-}
-
-.P90 {
-  background-color: #4646d7 !important;
-  color: white !important;
-}
-.color {
-  background-color: #f5f5dc !important;
-  color: white !important;
-}
-
-.QT {
-  background-color: #ffb6c1 !important;
-  color: white !important;
-}
-.LT {
-  background-color: #76d376 !important;
-  color: white !important;
-}
-.SE {
-  background-color: #fdffa2 !important;
-  color: white !important;
-}
-.BD {
-  background-color: #ed3333 !important;
-  color: white !important;
-}
-
 .navbar-nav li :hover {
   color: #ec6e00 !important;
 }

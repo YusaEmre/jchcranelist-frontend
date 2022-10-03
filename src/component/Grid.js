@@ -96,15 +96,22 @@ function CustomGrid() {
             ></i>
 
             <div class="vr ms-2"></div>
-            <button
-              className="btn"
+            {token ?  (
+              <button 
+              className="btn mb-1"
               data-bs-toggle="modal"
               data-bs-target="#createModal"
             >
-              Working Status <i className="bi bi-gear-fill ms-2 p-0 mb-1"></i>
+              Working Status <i className="bi bi-gear-fill ms-2 p-0"></i>
             </button>
+            ):
+              <></>
+            }
+            
 
-            <CreateOption options={options} />
+            <CreateOption 
+             options={options}
+             token={token} />
             <SlideSettings
               slideEnd={slideEnd}
               slideStart={slideStart}
