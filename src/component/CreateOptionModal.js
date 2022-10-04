@@ -3,8 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 
-const CreateOption = ({ options,token }) => {
-  const [optionsAr, setOptionsAr] = useState(options);
+const CreateOption = ({ options,token,optionsAr,setOptionsAr,fetchData }) => {
   const [optionColor, setOptionColor] = useState('#9E9FE0');
   const [optionLabel, setOptionLabel] = useState();
   const [deletedStatuses, setDeletedStatuses] =useState([]);
@@ -31,10 +30,16 @@ const CreateOption = ({ options,token }) => {
         },
       });
       toast.info(`Changes are saved`, 1);
-   
+      fetchData();
+     
+     
     } catch (er) {
       toast.error(er.response.data.message, 1);
+      setOptionsAr(options)   
+
     }
+    setDeletedStatuses([]);
+
   };
 
   const handleDelete = (e,index) =>{
@@ -45,7 +50,27 @@ const CreateOption = ({ options,token }) => {
       return optionsAr.filter((value, i) => i !== index);
     })
   }
+  const handleOptionLabelChange = (e,option) => {
+    let copyAr = optionsAr;
 
+    copyAr.map((value,i) => {
+      if(value.id === option.id){
+        copyAr[i] = {id:option.id,statusName:e.target.value, color:option.color}
+      }
+      setOptionsAr(copyAr);
+
+    })}
+    const handleOptionColorChange = (e,option) => {
+      let copyAr = optionsAr;
+      copyAr.map((value,i) => {
+        if(value.id === option.id){
+          copyAr[i] = {id:option.id,statusName:option.statusName, color:e.target.value}
+        }
+        setOptionsAr(copyAr);
+      })
+
+
+  }
   const renderOptions = () => {
     return optionsAr.map((option,index) => {
       return option ? (
@@ -56,6 +81,7 @@ const CreateOption = ({ options,token }) => {
               class="form-control "
               type="text"
               placeholder="Option"
+              onChange={(e) => handleOptionLabelChange(e,option)}
               defaultValue={option.statusName}
               aria-label="default input example"
             />
@@ -66,6 +92,8 @@ const CreateOption = ({ options,token }) => {
               class="form-control form-control-color"
               id="exampleColorInput"
               defaultValue={option.color}
+              onChange={(e) => handleOptionColorChange(e,option)}
+
               title="Choose option color"
             />
           </div>
@@ -158,7 +186,7 @@ const CreateOption = ({ options,token }) => {
           </div>
         </div>
       </div>
-      <ToastContainer position="bottom-right" autoClose={3000} />
+      <ToastContainer position="bottom-right" autoClose={2000} />
     </div>
   );
 };

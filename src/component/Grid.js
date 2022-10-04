@@ -17,6 +17,8 @@ function CustomGrid() {
   const [slideEnd, setSlideEnd] = useState(new Date('06-01-2023'));
   const [options, setOptions] = useState([]);
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const [optionsAr, setOptionsAr] = useState([]);
+
   const handle = useFullScreenHandle();
   const fetchData = async (token) => {
     const month = moment(date).format('MM-YYYY');
@@ -32,7 +34,8 @@ function CustomGrid() {
       },
     });
     setOptions(resp.data);
-    console.log(resp);
+    setOptionsAr(resp.data)
+    
   };
 
   useEffect(() => {
@@ -111,6 +114,9 @@ function CustomGrid() {
 
             <CreateOption 
              options={options}
+             optionsAr={optionsAr}
+             setOptionsAr={setOptionsAr}
+             fetchData={fetchData}
              token={token} />
             <SlideSettings
               slideEnd={slideEnd}
@@ -139,11 +145,11 @@ function CustomGrid() {
           <UserGrid date={date} fetchedData={fetchedData} />
         ) : (
           <AdminGrid
-            options={options}
+            options={optionsAr}
             token={token}
             date={date}
             fetchedData={fetchedData}
-            workingStatus={options}
+            workingStatus={optionsAr}
           />
         )}
       </FullScreen>

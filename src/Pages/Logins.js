@@ -18,7 +18,7 @@ const Login = (props) => {
         email: username,
         password: password,
       });
-      localStorage.setItem('token', resp.data.token);
+      localStorage.setItem('token', resp.data.accessToken);
       navigate('/');
       window.location.reload();
     } catch (error) {

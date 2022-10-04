@@ -118,7 +118,10 @@ function AdminGrid({ token, fetchedData, date, workingStatus }) {
             {listData &&
               workingStatus &&
               listData.map((data, dataIndex) => (
+                
                 <tr key={data.id}>
+                                        {console.log(data)}
+
                   <td>{data.fleetNo}</td>
                   <td>{data.vehicleModel}</td>
                   <td>{data.size}</td>
@@ -130,7 +133,7 @@ function AdminGrid({ token, fetchedData, date, workingStatus }) {
                         className={`w-100 text-center`}
                         id={`${dataIndex} + ${index}`}
                         defaultValue={status.workingStatus.statusName}
-                        style={{ width: 30 ,backgroundColor:status.workingStatus.color}}
+                        style={{ backgroundColor:status.workingStatus.color}}
                         onChange={(e) => handleChange(e, data, index)}
                       >
                         {workingStatus.map((option) => (
