@@ -21,7 +21,7 @@ const Login = (props) => {
       localStorage.setItem('token', resp.data.accessToken);
       localStorage.setItem('refreshToken', resp.data.refreshToken);
       localStorage.setItem('user', resp.data.userName);
-      
+    
       window.location.replace('/');
     } catch (error) {
       if (error.response.data.status == 401) {
