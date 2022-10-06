@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import CustomAxios from '../api/axios';
 import { toast, ToastContainer } from 'react-toastify';
 import Input from '../component/Input';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,8 +15,8 @@ const Register = () => {
 
   const handleRegister = async () => {
     try {
-      await axios.post(
-        'http://localhost:8080/api/user/register',
+      await CustomAxios.post(
+        'user/register',
         {
           name: name,
           surname: surname,
@@ -25,11 +25,6 @@ const Register = () => {
           password: password,
           role: 1,
         },
-        {
-          headers: {
-            Authorization: 'Bearer ' + token,
-          },
-        }
       );
       toast.success(`register success`);
     } catch (error) {

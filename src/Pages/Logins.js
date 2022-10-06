@@ -19,8 +19,9 @@ const Login = (props) => {
         password: password,
       });
       localStorage.setItem('token', resp.data.accessToken);
+      localStorage.setItem('refreshToken', resp.data.refreshToken);
+      localStorage.setItem('user', resp.data.userName);
       navigate('/');
-      window.location.reload();
     } catch (error) {
       if (error.response.data.status == 401) {
         toast.error('failed login, Unauthorized');

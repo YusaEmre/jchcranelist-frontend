@@ -3,9 +3,28 @@ import '../App.css';
 import { Link } from 'react-router-dom';
 import crane from '../images/crane.png';
 import logo from '../images/logo.png';
+import axios from 'axios';
+
 
 export const Navbar = () => {
   const [token, setToken] = useState(localStorage.getItem('token'));
+
+
+  const handleLogut = async (e) => {
+    try {
+      const resp = await axios.post('http://localhost:8080/api/user/logout?userEmail='+localStorage.getItem('user'));
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+      window.location.replace('/');
+    } catch (error) {
+      console.log(error);
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      //localStorage.removeItem('user');
+      //window.location.replace('/');
+    }
+  };
 
   return (
     <div className="navbar-background">
@@ -51,12 +70,7 @@ export const Navbar = () => {
               <li>
                 <Link
                   to="/"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    localStorage.removeItem('token');
-                    setToken(null);
-                    window.location.reload();
-                  }}
+                  onClick={(e) => handleLogut(e)}
                   className="nav-link"
                 >
                   <i className="bi bi-door-closed"></i> Logout

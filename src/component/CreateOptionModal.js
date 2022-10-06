@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
-import axios from 'axios';
+import CustomAxios from '../api/axios';
 
 const CreateOption = ({ options,token,optionsAr,setOptionsAr,fetchData }) => {
   const [optionColor, setOptionColor] = useState('#9E9FE0');
@@ -24,11 +24,7 @@ const CreateOption = ({ options,token,optionsAr,setOptionsAr,fetchData }) => {
       deletedWorkingStatusList:deletedStatuses
     };
     try {
-      await axios.post('http://localhost:8080/api/workingstatus/saveAll', data, {
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
-      });
+      await CustomAxios.post('workingstatus/saveAll', data);
       toast.info(`Changes are saved`, 1);
       fetchData();
      

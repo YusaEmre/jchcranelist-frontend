@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import CustomAxios from '../api/axios';
 import DatePicker from 'react-datepicker';
 import moment from 'moment/moment';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
@@ -28,11 +29,7 @@ function CustomGrid() {
     setFetchedData(resp.data);
   };
   const fetchOptions = async () => {
-    const resp = await axios.get(`http://localhost:8080/api/workingstatus`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const resp = await CustomAxios.get(`workingstatus`);
     setOptions(resp.data);
     setOptionsAr(resp.data)
     

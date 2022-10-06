@@ -1,7 +1,7 @@
 import React from 'react';
 import Input from '../component/Input';
 import { useState } from 'react';
-import axios from 'axios';
+import CustomAxios from '../api/axios';
 import { toast, ToastContainer } from 'react-toastify';
 import DatePicker from 'react-datepicker';
 import moment from 'moment/moment';
@@ -31,11 +31,7 @@ const AddVehiclePage = () => {
       monthYear,
     };
     try {
-      await axios.post('http://localhost:8080/api/vehicle/save', data, {
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
-      });
+      await CustomAxios.post('vehicle/save', data);
       toast.info(`${data.vehicleModel} added`, 1);
       setMessage('Successfully added a vehicle');
     } catch (er) {
