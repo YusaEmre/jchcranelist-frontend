@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
 import CustomAxios from '../api/axios';
 
-const CreateOption = ({ options,token,optionsAr,setOptionsAr,fetchData }) => {
+const CreateOption = ({ options,optionsAr,setOptionsAr,fetchData }) => {
   const [optionColor, setOptionColor] = useState('#9E9FE0');
   const [optionLabel, setOptionLabel] = useState();
   const [deletedStatuses, setDeletedStatuses] =useState([]);
@@ -52,6 +52,7 @@ const CreateOption = ({ options,token,optionsAr,setOptionsAr,fetchData }) => {
     copyAr.map((value,i) => {
       if(value.id === option.id){
         copyAr[i] = {id:option.id,statusName:e.target.value, color:option.color}
+        console.log(copyAr[i].statusName);
       }
       setOptionsAr(copyAr);
 
@@ -61,6 +62,7 @@ const CreateOption = ({ options,token,optionsAr,setOptionsAr,fetchData }) => {
       copyAr.map((value,i) => {
         if(value.id === option.id){
           copyAr[i] = {id:option.id,statusName:option.statusName, color:e.target.value}
+          console.log(copyAr[i].color);
         }
         setOptionsAr(copyAr);
       })
