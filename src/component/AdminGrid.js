@@ -5,46 +5,43 @@ import moment from 'moment';
 import 'react-toastify/dist/ReactToastify.css';
 import { EditText } from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
+import { EditTextarea } from 'react-edit-text';
 
 function AdminGrid({ token, fetchedData, date, workingStatus }) {
-  const [listData,setListData] = useState(fetchedData);
-  
+  const [listData, setListData] = useState(fetchedData);
   const [selectValue, setSelectValue] = useState([]);
+  const [commentData, setCommentData] = useState(false);
+  const [commentSection, setCommentSection] = useState(false);
 
+  useEffect(() => {
+    setListData(fetchedData);
+  }, [fetchedData]);
 
-  useEffect(() => { setListData(fetchedData)}, [fetchedData])
-
-
-  const remove_from_list = (id) => {     
-    setListData(listData.filter(item=> item.id != id)); 
-  }
+  const remove_from_list = (id) => {
+    setListData(listData.filter((item) => item.id != id));
+  };
 
   const handleChange = (e, data, index) => {
     setSelectValue([
       ...selectValue,
       { id: e.target.id, value: e.target.value },
     ]);
-    
+
     const value = e.target.value;
     e.preventDefault();
-    data.workingStatusList[index].workingStatus.statusName = value; 
-    
-    
+    data.workingStatusList[index].workingStatus.statusName = value;
+
     workingStatus.map((option) => {
       if (option.statusName === value) {
         data.workingStatusList[index].workingStatus.id = option.id;
-        data.workingStatusList[index].workingStatus.color = option.color; 
+        data.workingStatusList[index].workingStatus.color = option.color;
       }
     });
-    
   };
   const handleEdit = async (e, dataIndex) => {
     e.preventDefault();
     try {
-      await CustomAxios.put(
-        `vehicle/edit`,
-        listData[dataIndex]
-      );
+      await CustomAxios.put(`vehicle/edit`, listData[dataIndex]);
       toast.info(`${listData[dataIndex].vehicleModel} updated`, 1);
     } catch (error) {
       toast.error(`not updated ${error}`);
@@ -54,17 +51,15 @@ function AdminGrid({ token, fetchedData, date, workingStatus }) {
     e.preventDefault();
     try {
       await CustomAxios.delete(
-        `http://localhost:8080/api/vehicle/delete/id/`+listData[dataIndex].id
+        `http://localhost:8080/api/vehicle/delete/id/` + listData[dataIndex].id
       );
       toast.info(`${listData[dataIndex].vehicleModel} deleted`, 1);
       remove_from_list(listData[dataIndex].id);
-    
     } catch (error) {
       toast.error(`Vehicle delete failed  ${error}`);
     }
   };
   const handleTotalWorkingDays = (data) => {
-  
     let totalWorkingDays = 0;
     data.map((item) => {
       if (
@@ -77,47 +72,77 @@ function AdminGrid({ token, fetchedData, date, workingStatus }) {
     });
     return <td className="text-center">{totalWorkingDays}</td>;
   };
-  
-  const handleFleetNoChange = ({ name, value}) => {
-    
+
+  const handleFleetNoChange = ({ name, value }) => {
     listData[name].fleetNo = value;
-    console.log(listData[name])
-
+    console.log(listData[name]);
   };
-  const handleModelChange = ({ name, value}) => {
-    
+  const handleModelChange = ({ name, value }) => {
     listData[name].vehicleModel = value;
-    console.log(listData[name])
-
+    console.log(listData[name]);
   };
-  
-  const handleSizeChange = ({ name, value}) => {
-    
+
+  const handleSizeChange = ({ name, value }) => {
     listData[name].size = value;
-    console.log(listData[name])
-
+    console.log(listData[name]);
   };
-  
-  const handleOperatorChange = ({ name, value}) => {
-    
+
+  const handleOperatorChange = ({ name, value }) => {
     listData[name].operator = value;
-    console.log(listData[name])
-
+    console.log(listData[name]);
   };
-  
+  const handleFocus = (status, dataIndex, index) => {
+    setCommentSection(true);
+    setCommentData({ data: status, dataIndex: dataIndex, index: index });
+    console.log(status);
+  };
+  const handleCommentChange = ({ value }) => {
+    listData[commentData.dataIndex].workingStatusList[
+      commentData.index
+    ].comment = value;
+    console.log(
+      listData[commentData.dataIndex].workingStatusList[commentData.index]
+        .comment
+    );
+  };
+
   return (
-   
     <div className="mt-2">
       {fetchedData.length > 0 ? (
         <table className="table table-bordered table-striped">
           <thead className="bg-light">
             <tr>
-              <th
-                className="text-center "
-                colSpan={100}
-                style={{ color: '#ec6e00' }}
-              >
-                <h5>{moment(date).format('MMMM')}</h5>
+              <th className=" " colSpan={100}>
+                <div className="row my-auto">
+                  <div className="col-4 ">
+                    {commentSection && (
+                      <div style={{ display: 'flex' }}>
+                        <i
+                          class="bi bi-eye-slash btn me-2 my-auto"
+                          onClick={() => setCommentSection(false)}
+                        ></i>
+
+                        <span className="me-2  my-auto">
+                          Day {commentData.data.day + 1}:
+                        </span>
+                        <EditTextarea
+                          className="comment-area my-auto"
+                          rows={2}
+                          defaultValue={commentData.data.comment}
+                          placeholder="Comment"
+                          onSave={handleCommentChange}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    className="col-4 text-center my-auto"
+                    style={{ color: '#ec6e00' }}
+                  >
+                    {' '}
+                    <h5>{moment(date).format('MMMM')}</h5>
+                  </div>
+                </div>
               </th>
             </tr>
           </thead>
@@ -137,49 +162,58 @@ function AdminGrid({ token, fetchedData, date, workingStatus }) {
             {listData &&
               workingStatus &&
               listData.map((data, dataIndex) => (
-                
                 <tr key={data.id}>
                   <td>
                     <EditText
-                       name={dataIndex}
-                      defaultValue={data.fleetNo} 
-                      onSave={handleFleetNoChange}    
-                      placeholder='Fleet No'     
-                      /></td>
-                  <td><EditText
-                       name={dataIndex}
-                       onSave={handleModelChange}         
-                       placeholder='Vehicle Model'
+                      name={dataIndex}
+                      defaultValue={data.fleetNo}
+                      onSave={handleFleetNoChange}
+                      placeholder="Fleet No"
+                    />
+                  </td>
+                  <td>
+                    <EditText
+                      name={dataIndex}
+                      onSave={handleModelChange}
+                      placeholder="Vehicle Model"
                       defaultValue={data.vehicleModel}
-                      /></td>
-                  <td><EditText
-                       name={dataIndex}
-                       placeholder='Size'
-                       type='number'
-                       onSave={handleSizeChange}         
-
-                       defaultValue={data.size}
-                      /></td>
-                  <td><EditText
-                       name={dataIndex}
-                       placeholder='Operator'
-                       onSave={handleOperatorChange}         
-
+                    />
+                  </td>
+                  <td>
+                    <EditText
+                      name={dataIndex}
+                      placeholder="Size"
+                      type="number"
+                      onSave={handleSizeChange}
+                      defaultValue={data.size}
+                    />
+                  </td>
+                  <td>
+                    <EditText
+                      name={dataIndex}
+                      placeholder="Operator"
+                      onSave={handleOperatorChange}
                       defaultValue={data.operator}
-                      /></td>
+                    />
+                  </td>
                   {data.workingStatusList.map((status, index) => (
                     <td className="pt-2 p-0">
                       <select
                         key={index}
                         className={`w-100 text-center`}
                         id={`${dataIndex} + ${index}`}
+                        title={status.comment}
+                        data-bs-toggle="tooltip"
                         defaultValue={status.workingStatus.statusName}
-                        style={{ backgroundColor:status.workingStatus.color}}
+                        style={{ backgroundColor: status.workingStatus.color }}
                         onChange={(e) => handleChange(e, data, index)}
+                        onFocus={() => handleFocus(status, dataIndex, index)}
                       >
                         {workingStatus.map((option) => (
-                          
-                          <option style={{backgroundColor:option.color}}>
+                          <option
+                            data-title={status.comment}
+                            style={{ backgroundColor: option.color }}
+                          >
                             {option.statusName}
                           </option>
                         ))}
@@ -232,8 +266,5 @@ function AdminGrid({ token, fetchedData, date, workingStatus }) {
     </div>
   );
 }
-
-
-
 
 export { AdminGrid };

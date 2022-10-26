@@ -31,8 +31,7 @@ function CustomGrid() {
   const fetchOptions = async () => {
     const resp = await CustomAxios.get(`workingstatus`);
     setOptions(resp.data);
-    setOptionsAr(resp.data)
-    
+    setOptionsAr(resp.data);
   };
 
   useEffect(() => {
@@ -69,7 +68,7 @@ function CustomGrid() {
   return (
     <div className="mt-4">
       <div className="d-flex row-reverse mb-2 justify-content-center">
-        <div className="col-md-4 col-4 ">
+        <div className="col-md-3 col-4 ">
           <div className="form-check form-switch">
             <label
               className="form-check-label mt-1"
@@ -78,14 +77,14 @@ function CustomGrid() {
               Table Slide
             </label>
             <input
-              className="form-check-input mt-2"
+              className="form-check-input mt-2 my-auto"
               type="checkbox"
               role="switch"
               id="flexSwitchCheckDefault"
               onChange={(e) => Loop(e)}
             />
             <i
-              className="bi btn bi-gear-fill ms-2 p-0 mb-1"
+              className="bi btn bi-gear-fill ms-2 p-0 mb-1 my-auto"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
             ></i>
@@ -96,25 +95,25 @@ function CustomGrid() {
             ></i>
 
             <div class="vr ms-2"></div>
-            {token ?  (
-              <button 
-              className="btn mb-1"
-              data-bs-toggle="modal"
-              data-bs-target="#createModal"
-            >
-              Working Status <i className="bi bi-gear-fill ms-2 p-0"></i>
-            </button>
-            ):
+            {token ? (
+              <button
+                className="btn mb-1"
+                data-bs-toggle="modal"
+                data-bs-target="#createModal"
+              >
+                Working Status <i className="bi bi-gear-fill ms-2 p-0"></i>
+              </button>
+            ) : (
               <></>
-            }
-            
+            )}
 
-            <CreateOption 
-             options={options}
-             optionsAr={optionsAr}
-             setOptionsAr={setOptionsAr}
-             fetchData={fetchData}
-             token={token} />
+            <CreateOption
+              options={options}
+              optionsAr={optionsAr}
+              setOptionsAr={setOptionsAr}
+              fetchData={fetchData}
+              token={token}
+            />
             <SlideSettings
               slideEnd={slideEnd}
               slideStart={slideStart}
@@ -125,7 +124,7 @@ function CustomGrid() {
             />
           </div>
         </div>
-        <div className="col-md-5"> </div>
+        <div className="col-md-5"></div>
         <div className="col-md-2 ">
           <DatePicker
             selected={date}
