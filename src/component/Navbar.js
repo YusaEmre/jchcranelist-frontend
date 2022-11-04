@@ -5,14 +5,15 @@ import crane from '../images/crane.png';
 import logo from '../images/logo.png';
 import axios from 'axios';
 
-
 export const Navbar = () => {
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-
   const handleLogut = async (e) => {
     try {
-      const resp = await axios.post('http://localhost:8080/api/user/logout?userEmail='+localStorage.getItem('user'));
+      const resp = await axios.post(
+        'http://localhost:8080/api/user/logout?userEmail=' +
+          localStorage.getItem('user')
+      );
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
@@ -21,8 +22,8 @@ export const Navbar = () => {
       console.log(error);
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
-      //localStorage.removeItem('user');
-      //window.location.replace('/');
+      localStorage.removeItem('user');
+      window.location.replace('/');
     }
   };
 
